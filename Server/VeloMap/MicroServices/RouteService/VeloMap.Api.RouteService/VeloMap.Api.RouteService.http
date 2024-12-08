@@ -1,0 +1,6 @@
+@VeloMap.Api.RouteService_HostAddress = http://localhost:5097
+
+GET {{VeloMap.Api.RouteService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,5 @@
+* {
+  box-sizing: border-box; /* Учитывать отступы и границы в ширине */
+  margin: 0;
+  padding: 0;
+}

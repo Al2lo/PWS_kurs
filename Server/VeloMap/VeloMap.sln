@@ -1,0 +1,85 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34701.34
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MicroServices", "MicroServices", "{BE448744-FD37-47F7-ACCD-37D188DC025B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AuthService", "AuthService", "{1C28A72F-8394-4C27-B348-D8390ABDDDF7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeloMap.Api.AuthService", "MicroServices\AuthService\VeloMap.Api.AuthService\VeloMap.Api.AuthService.csproj", "{36F03087-DAA8-4835-964A-1FD5DD76B350}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeloMap.Domain.AuthService", "MicroServices\AuthService\VeloMap.Domain.AuthService\VeloMap.Domain.AuthService.csproj", "{C0096F60-FB0E-4467-A4CD-779D72715DE8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeloMap.Infrastructure.AuthService", "MicroServices\AuthService\VeloMap.Infrastructure.AuthService\VeloMap.Infrastructure.AuthService.csproj", "{A4D1AA26-C17D-4D60-99E7-664F20621C77}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeloMap.Application.AuthService", "MicroServices\AuthService\VeloMap.Application.AuthService\VeloMap.Application.AuthService.csproj", "{4DBB558E-E778-417A-A75E-FFC9F4E1E73C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RouteService", "RouteService", "{0F01E1FC-38CC-4C2C-A29A-70CE91A7FC3C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeloMap.Domain.RouteService", "MicroServices\RouteService\VeloMap.Domain.RouteService\VeloMap.Domain.RouteService.csproj", "{28D8DE78-903E-4DD3-9792-39B9782D9718}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeloMap.Infrastructure.RouteService", "MicroServices\RouteService\VeloMap.Infrastructure.RouteService\VeloMap.Infrastructure.RouteService.csproj", "{138086EC-E328-4F05-A987-2401E3948359}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeloMap.Application.RouteService", "MicroServices\RouteService\VeloMap.Application.RouteService\VeloMap.Application.RouteService.csproj", "{BBE15E9A-BD09-4F88-9610-AD8216618173}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeloMap.Api.RouteService", "MicroServices\RouteService\VeloMap.Api.RouteService\VeloMap.Api.RouteService.csproj", "{3030EEBC-1BF0-4C2C-97A1-0AF550FA1876}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{36F03087-DAA8-4835-964A-1FD5DD76B350}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36F03087-DAA8-4835-964A-1FD5DD76B350}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36F03087-DAA8-4835-964A-1FD5DD76B350}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36F03087-DAA8-4835-964A-1FD5DD76B350}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0096F60-FB0E-4467-A4CD-779D72715DE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0096F60-FB0E-4467-A4CD-779D72715DE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0096F60-FB0E-4467-A4CD-779D72715DE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0096F60-FB0E-4467-A4CD-779D72715DE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4D1AA26-C17D-4D60-99E7-664F20621C77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4D1AA26-C17D-4D60-99E7-664F20621C77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4D1AA26-C17D-4D60-99E7-664F20621C77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4D1AA26-C17D-4D60-99E7-664F20621C77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DBB558E-E778-417A-A75E-FFC9F4E1E73C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DBB558E-E778-417A-A75E-FFC9F4E1E73C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DBB558E-E778-417A-A75E-FFC9F4E1E73C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DBB558E-E778-417A-A75E-FFC9F4E1E73C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28D8DE78-903E-4DD3-9792-39B9782D9718}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28D8DE78-903E-4DD3-9792-39B9782D9718}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28D8DE78-903E-4DD3-9792-39B9782D9718}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28D8DE78-903E-4DD3-9792-39B9782D9718}.Release|Any CPU.Build.0 = Release|Any CPU
+		{138086EC-E328-4F05-A987-2401E3948359}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{138086EC-E328-4F05-A987-2401E3948359}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{138086EC-E328-4F05-A987-2401E3948359}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{138086EC-E328-4F05-A987-2401E3948359}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBE15E9A-BD09-4F88-9610-AD8216618173}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBE15E9A-BD09-4F88-9610-AD8216618173}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBE15E9A-BD09-4F88-9610-AD8216618173}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBE15E9A-BD09-4F88-9610-AD8216618173}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3030EEBC-1BF0-4C2C-97A1-0AF550FA1876}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3030EEBC-1BF0-4C2C-97A1-0AF550FA1876}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3030EEBC-1BF0-4C2C-97A1-0AF550FA1876}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3030EEBC-1BF0-4C2C-97A1-0AF550FA1876}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1C28A72F-8394-4C27-B348-D8390ABDDDF7} = {BE448744-FD37-47F7-ACCD-37D188DC025B}
+		{36F03087-DAA8-4835-964A-1FD5DD76B350} = {1C28A72F-8394-4C27-B348-D8390ABDDDF7}
+		{C0096F60-FB0E-4467-A4CD-779D72715DE8} = {1C28A72F-8394-4C27-B348-D8390ABDDDF7}
+		{A4D1AA26-C17D-4D60-99E7-664F20621C77} = {1C28A72F-8394-4C27-B348-D8390ABDDDF7}
+		{4DBB558E-E778-417A-A75E-FFC9F4E1E73C} = {1C28A72F-8394-4C27-B348-D8390ABDDDF7}
+		{0F01E1FC-38CC-4C2C-A29A-70CE91A7FC3C} = {BE448744-FD37-47F7-ACCD-37D188DC025B}
+		{28D8DE78-903E-4DD3-9792-39B9782D9718} = {0F01E1FC-38CC-4C2C-A29A-70CE91A7FC3C}
+		{138086EC-E328-4F05-A987-2401E3948359} = {0F01E1FC-38CC-4C2C-A29A-70CE91A7FC3C}
+		{BBE15E9A-BD09-4F88-9610-AD8216618173} = {0F01E1FC-38CC-4C2C-A29A-70CE91A7FC3C}
+		{3030EEBC-1BF0-4C2C-97A1-0AF550FA1876} = {0F01E1FC-38CC-4C2C-A29A-70CE91A7FC3C}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2E7BE1CE-BE3F-4287-A36E-9D6A05542061}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,39 @@
+header {
+  display: flex;
+  justify-content: space-between; /* Распределяет пространство между логотипом и меню */
+  align-items: center; /* Выравнивает элементы по центру по вертикали */
+  background-color: #f8721f; /* Цвет фона для header */
+  padding: 20px;
+  width: 100%;
+}
+
+.logo {
+  color: white; /* Цвет текста для логотипа */
+  text-decoration: none; /* Убирает подчеркивание */
+  font-size: 24px; /* Размер шрифта для логотипа */
+}
+
+.navbar {
+  /* Дополнительные стили для навигации, если нужно */
+}
+
+.nav-list {
+  display: flex; /* Располагает элементы списка в строку */
+  list-style: none; /* Убирает маркеры списка */
+  margin: 0; /* Убирает отступы */
+  padding: 0; /* Убирает внутренние отступы */
+}
+
+.nav-item {
+  margin-left: 20px; /* Отступ между элементами навигации */
+}
+
+.nav-link {
+  color: white; /* Цвет текста для ссылок */
+  text-decoration: none; /* Убирает подчеркивание */
+  font-size: 18px; /* Размер шрифта для ссылок */
+}
+
+.nav-link:hover {
+  text-decoration: underline; /* Подчеркивание при наведении */
+}
