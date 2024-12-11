@@ -4,6 +4,13 @@ export interface RouteObj {
 }
 
 export interface MapInterface {
-    userLocation: RouteObj;
     routeObjs: RouteObj[];
+    setClickLocation: (coord: { lat: number; lon: number }) => void;
+    isGetLocation: boolean;
+    setIsGetLocation: (b: boolean) => void;
 }
+
+export interface Route {
+    id: string;
+    text: string;
+  }

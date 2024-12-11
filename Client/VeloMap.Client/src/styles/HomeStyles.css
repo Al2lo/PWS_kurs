@@ -41,3 +41,29 @@
 [class*="ground-pane"] {
     filter: grayscale(1) brightness(0.5); /* Яркость регулирует затемнение */
 }
+
+.location-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: orange;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+    padding: 0px;
+    text-align: center;
+    width: 40px;  /* Растягиваем изображение на всю ширину кнопки */
+    height: 40px;  /* Растягиваем изображение на всю высоту кнопки */
+}
+
+.location-button:hover {
+    background-color: darkorange;
+}
+
+.img-location-button {
+    width: 100%;  /* Растягиваем изображение на всю ширину кнопки */
+    height: 100%;  /* Растягиваем изображение на всю высоту кнопки */
+  }

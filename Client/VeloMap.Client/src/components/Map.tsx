@@ -1,104 +1,146 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { MapInterface } from "../models/models";
+import getMyLocation from '../assets/getMyLocation.png';
+import myLocation from '../assets/myLocation.png';
 
-const MyMap: React.FC<MapInterface> = ({ userLocation, routeObjs }) => {
-  const [mapInstance, setMapInstance] = useState<any>(null);
-  const [userPlacemark, setUserPlacemark] = useState<any>(null);
+const MyMap: React.FC<MapInterface> = ({ routeObjs, setClickLocation ,setIsGetLocation }) => {
+  const [userPlacemark, setUserPlacemark] = useState<any>(null); 
+  const [currentRoute, setCurrentRoute] = useState<any>(null); 
+  const [location, setLocation] = useState<{ lat: number; lon: number }>({ lat: 53.906, lon: 27.5308 }); 
 
-  // Инициализация карты
-  const init = () => {
-    const map = new window.ymaps.Map('map-test', {
-      center: [userLocation.lat, userLocation.lon],
-      zoom: 12,
-    });
+  const mapInstanceRef = useRef<any>(null); 
+  const isScriptLoaded = useRef<boolean>(false); 
 
-    // Убираем элементы управления
-    map.controls.remove('geolocationControl');
-    map.controls.remove('searchControl');
-    map.controls.remove('trafficControl');
-    map.controls.remove('fullscreenControl');
-    map.controls.remove('zoomControl');
-    map.controls.remove('rulerControl');
-
-    // Устанавливаем карту в состояние
-    setMapInstance(map);
+  const getUserLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          setLocation({ lat, lon });
+          console.log(location)
+          if (mapInstanceRef.current) {
+            mapInstanceRef.current.setCenter([lat, lon]);
+            mapInstanceRef.current.setZoom(12);
+          }
+        },
+        (error) => {
+          console.error("Ошибка получения местоположения: ", error);
+        }
+      );
+    } else {
+      console.error("Geolocation не поддерживается в этом браузере");
+    }
   };
 
-  // Функция для добавления метки
-  const addUserPlacemark = (location: { lat: number; lon: number }) => {
-    if (mapInstance) {
+
+  useEffect(() => {
+    if (!isScriptLoaded.current) {
+      const loadMapScript = () => {
+        const script = document.createElement("script");
+        script.src =
+          "https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=0cf0dba2-0bf2-44cd-a1a5-355bca25bf28";
+        script.onload = () => {
+          if (window.ymaps && !mapInstanceRef.current) {
+            window.ymaps.ready(() => {
+              mapInstanceRef.current = new window.ymaps.Map("map-test", {
+                center: [location.lat, location.lon],
+                zoom: 12,
+              });
+  
+              mapInstanceRef.current.controls.remove("geolocationControl");
+              mapInstanceRef.current.controls.remove("searchControl");
+              mapInstanceRef.current.controls.remove("trafficControl");
+              mapInstanceRef.current.controls.remove("fullscreenControl");
+              mapInstanceRef.current.controls.remove("zoomControl");
+              mapInstanceRef.current.controls.remove("rulerControl");
+              
+              mapInstanceRef.current.events.add('click', function (e: any) {
+
+                  const coords = e.get('coords');
+                  setClickLocation({ lat: coords[0], lon: coords[1] });
+                  console.log({ lat: coords[0], lon: coords[1] })
+
+                setIsGetLocation(false);
+              });
+
+            });
+          }
+        };
+        script.onerror = () => {
+          console.error("Ошибка загрузки скрипта Яндекс.Карт");
+        };
+        document.head.appendChild(script);
+      };
+  
+      if (!isScriptLoaded.current) {
+        loadMapScript();
+        isScriptLoaded.current = true; 
+      }
+    }
+  
+    return () => {
+      const existingScript = document.querySelector(`script[src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=0cf0dba2-0bf2-44cd-a1a5-355bca25bf28"]`);
+      if (existingScript) {
+        document.head.removeChild(existingScript);
+      }
+    };
+  }, [location, routeObjs]);
+  
+  useEffect(() => {
+    if (mapInstanceRef.current && location) {
       if (userPlacemark) {
-        mapInstance.geoObjects.remove(userPlacemark);
+        mapInstanceRef.current.geoObjects.remove(userPlacemark);
       }
 
       const placemark = new window.ymaps.Placemark(
         [location.lat, location.lon],
         {
-          hintContent: 'Ваше местоположение',
-          balloonContent: 'Это ваше текущее местоположение',
+          hintContent: "Ваше местоположение",
+          balloonContent: "Это ваше текущее местоположение",
         },
         {
-          preset: 'islands#icon',
-          iconColor: '#0095b6', // Цвет иконки
+          iconLayout: "default#image",
+          iconImageHref: myLocation, 
+          iconImageSize: [40, 40], 
+          iconImageOffset: [-15, -30],
         }
       );
 
-      // Добавляем метку на карту
-      mapInstance.geoObjects.add(placemark);
-
-      // Обновляем состояние метки
+      mapInstanceRef.current.geoObjects.add(placemark);
       setUserPlacemark(placemark);
     }
-  };
+  }, [location]); 
 
-  const buildRoute = (points: Array<{ lat: number; lon: number }>) => {
-    if (mapInstance) {
-      const multiRoute = new window.ymaps.multiRouter.MultiRoute({
-        referencePoints: points.map(point => [point.lat, point.lon]),
-        params: {
-          routingMode: 'bicycle',
-        }
-      }, {
-        boundsAutoApply: true,
-      });
-
-      mapInstance.geoObjects.add(multiRoute);
-    }
-  };
-
+  // Построение маршрута
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=0cf0dba2-0bf2-44cd-a1a5-355bca25bf28'; // Ваш API ключ
-    script.onload = () => {
-      if (window.ymaps) {
-        window.ymaps.ready(() => init());
+    if (mapInstanceRef.current && routeObjs) {
+      console.log(routeObjs)
+      if (currentRoute) {
+        mapInstanceRef.current.geoObjects.remove(currentRoute);
       }
-    };
-    script.onerror = () => {
-      console.error('Ошибка загрузки скрипта Яндекс.Карт');
-    };
-    document.head.appendChild(script);
 
-    return () => {
-      document.head.removeChild(script);
-    };
-  }, []);
+      const multiRoute = new window.ymaps.multiRouter.MultiRoute(
+        {
+          referencePoints: routeObjs.map((point) => [point.lat, point.lon]),
+          params: {
+            routingMode: "bicycle",
+          },
+        },
+        {
+          boundsAutoApply: true,
+        }
+      );
 
-  useEffect(() => {
-    if (mapInstance) {
-      addUserPlacemark(userLocation);
+      mapInstanceRef.current.geoObjects.add(multiRoute);
+      setCurrentRoute(multiRoute);
     }
-  }, [userLocation, mapInstance]);
-
-  useEffect(() => {
-    if (mapInstance) {
-      buildRoute(routeObjs);
-    }
-  }, [routeObjs, mapInstance]); 
+  }, [routeObjs]); // Следим за изменениями в маршруте
 
   return (
     <div className="map-container">
       <div id="map-test" className="map"></div>
+      <button className="location-button" onClick={getUserLocation}><img className="img-location-button" src={getMyLocation}></img></button>
     </div>
   );
 };

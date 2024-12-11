@@ -17,13 +17,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeloMap.Application.AuthSer
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RouteService", "RouteService", "{0F01E1FC-38CC-4C2C-A29A-70CE91A7FC3C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeloMap.Domain.RouteService", "MicroServices\RouteService\VeloMap.Domain.RouteService\VeloMap.Domain.RouteService.csproj", "{28D8DE78-903E-4DD3-9792-39B9782D9718}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeloMap.Domain.RouteService", "MicroServices\RouteService\VeloMap.Domain.RouteService\VeloMap.Domain.RouteService.csproj", "{28D8DE78-903E-4DD3-9792-39B9782D9718}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeloMap.Infrastructure.RouteService", "MicroServices\RouteService\VeloMap.Infrastructure.RouteService\VeloMap.Infrastructure.RouteService.csproj", "{138086EC-E328-4F05-A987-2401E3948359}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeloMap.Infrastructure.RouteService", "MicroServices\RouteService\VeloMap.Infrastructure.RouteService\VeloMap.Infrastructure.RouteService.csproj", "{138086EC-E328-4F05-A987-2401E3948359}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeloMap.Application.RouteService", "MicroServices\RouteService\VeloMap.Application.RouteService\VeloMap.Application.RouteService.csproj", "{BBE15E9A-BD09-4F88-9610-AD8216618173}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeloMap.Application.RouteService", "MicroServices\RouteService\VeloMap.Application.RouteService\VeloMap.Application.RouteService.csproj", "{BBE15E9A-BD09-4F88-9610-AD8216618173}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeloMap.Api.RouteService", "MicroServices\RouteService\VeloMap.Api.RouteService\VeloMap.Api.RouteService.csproj", "{3030EEBC-1BF0-4C2C-97A1-0AF550FA1876}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeloMap.Api.RouteService", "MicroServices\RouteService\VeloMap.Api.RouteService\VeloMap.Api.RouteService.csproj", "{3030EEBC-1BF0-4C2C-97A1-0AF550FA1876}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

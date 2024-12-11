@@ -1,0 +1,66 @@
+.routeInput-container {
+    display: flex;
+    align-items: center; /* Выравнивание по вертикали */
+    justify-content: space-between; /* Распределение элементов по горизонтали */
+    gap: 10px; /* Промежуток между полем ввода и кнопкой */
+    padding: 10px; /* Внутренний отступ */
+    border: 1px solid #ddd; /* Легкая граница */
+    border-radius: 8px; /* Скругленные углы */
+    background-color: #f9f9f9; /* Цвет фона */
+    width: 500px; /* Ширина контейнера */
+    margin: 10px auto; /* Центрирование контейнера на странице */
+  }
+  
+  .routeInput-container input {
+    flex-grow: 1; /* Поле ввода растягивается, чтобы занять доступное пространство */
+    padding: 8px 12px; /* Отступы внутри поля ввода */
+    border: 1px solid #ccc; /* Граница для поля ввода */
+    border-radius: 4px; /* Скругленные углы для поля ввода */
+    font-size: 14px; /* Размер шрифта */
+    outline: none; /* Убираем контур по умолчанию при фокусе */
+    transition: border-color 0.3s; /* Плавный переход при изменении границы */
+  }
+  
+  .routeInput-container input:focus {
+    border-color: #4a90e2;
+  }
+  
+  .delete-button {
+    background: #e74c3c; /* Красный цвет для удаления */
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    width: 30px;  /* Растягиваем изображение на всю ширину кнопки */
+    height: 30px;  /* Растягиваем изображение на всю высоту кнопки */
+  }
+
+
+.delete-button[type="submit"]:hover {
+  background: #94271b; /* Темный красный при наведении */
+}
+
+.getCoordOnMap-button
+{
+  background: rgb(3, 183, 3); /* Красный цвет для удаления */
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  text-align: center;
+  position: relative;
+  width: 40px;  /* Растягиваем изображение на всю ширину кнопки */
+  height: 30px;  /* Растягиваем изображение на всю высоту кнопки */
+}  
+
+.getCoordOnMap-button[type="submit"]:hover {
+  background: #1e5600; /* Темный красный при наведении */
+}
+.routeInput-container button:focus {
+  outline: none; /* Убираем стандартный фокусный контур */
+}
+  
+.img-button{
+  width: 80%;  /* Растягиваем изображение на всю ширину кнопки */
+  height: 100%;  /* Растягиваем изображение на всю высоту кнопки */
+}  

@@ -1,56 +1,116 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import MyMap from "../components/Map";
 import '../styles/HomeStyles.css';
 import Button from "../components/Button";
 import createRouteImg from '../assets/createRoute.png';
 import completeRouteImg from '../assets/completeRoutes.png';
 import CreateRoute from "../components/CreateRoute";
+import { Route } from "../models/models";
+import GetRoute from "../components/GetRoute";
 
 const HomePage: FC = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalCreateRouteOpen, setIsModalCreateRouteOpen] = useState(false);
+    const [isModalGetRouteOpen, setIsModalGetRouteOpen] = useState(false);
+    const [inputRoutes, setInputRoutes] = useState<Route[]>([{id: "1", text: "fdsf"}, {id: "2", text: "fdsf"}]);
+    const [inputRoutesLoc, setInputRoutesLoc] = useState<{ lat: number; lon: number }[]>([{ lat: 53.906, lon: 27.5308 }, { lat: 53.706, lon: 27.1308 }]);
+    const idInputRouteRef = useRef("");
+    const [isGetLocation, setIsGetLocation] = useState<boolean>(false);
+    const openModal = () => setIsModalCreateRouteOpen(true);
+    const closeModal = () => setIsModalCreateRouteOpen(false);  
+    const openModalGetRoute = () => setIsModalGetRouteOpen(true);
+    const closeModalGetRoute = () => setIsModalGetRouteOpen(false);   
 
-    const openModal = () => setIsModalOpen(true);
-    const closeModal = () => setIsModalOpen(false);    
+    const setIdInputRoute = (id: string) => {
+        console.log('Setting idInputRoute:', id);
+        idInputRouteRef.current = id;
+        console.log(idInputRouteRef.current)
+      };
 
-    const [coordinates, setCoordinates] = useState<{ lat: number; lon: number }>({ lat: 53.906, lon: 27.5308 });
+    const GetIsOpenCreateRouteModal = () => {
+        console.log('sfd')
+        console.log(isModalCreateRouteOpen)
+        console.log(isGetLocation)
+        if(isModalCreateRouteOpen && isGetLocation)
+            return false;
 
-    useEffect(() => {
-        // Функция для получения текущего местоположения
-        const fetchLocation = () => {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        const { latitude, longitude } = position.coords;
-                        setCoordinates({ lat: latitude, lon: longitude });
-                    },
-                    (err) => {
-                        console.error(`Ошибка получения местоположения: ${err.message}`);
-                    }
+        if(isModalCreateRouteOpen && !isGetLocation)
+            return true;
+
+        if(!isModalCreateRouteOpen)
+            return false;
+
+        return false;
+    }
+
+    const setClickLocation = (coord: { lat: number; lon: number }) => {
+        console.log('location')
+        console.log(isGetLocation)
+        let strAddress = coord.lat + ", " + coord.lon;
+
+        setInputRoutes((inputRoutes) =>
+            inputRoutes.map((route) =>
+              route.id === idInputRouteRef.current ? { ...route, text: strAddress} : route
+            )
+          );
+
+        setIsGetLocation(false);
+    }
+
+    const getRouteCoord = async () => {
+        try {
+            setInputRoutesLoc([]); // Очищаем только один раз перед началом процесса
+            console.log('length: ' + inputRoutesLoc.length);
+    
+            const promises = inputRoutes.map(async (router) => {
+                const address = router.text;
+                console.log(address);
+    
+                if (!address.trim()) {
+                    throw new Error("Адрес не может быть пустым.");
+                }
+    
+                const response = await fetch(
+                    `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json`
                 );
-            } else {
-                console.error('Geolocation не поддерживается вашим браузером.');
-            }
-        };
-
-        // Первое получение местоположения
-        fetchLocation();
-
-        // Установка интервала для обновления местоположения каждые 15 секунд
-        const intervalId = setInterval(fetchLocation, 15000);
-
-        // Очистка интервала при размонтировании компонента
-        return () => clearInterval(intervalId);
-    }, []);
+    
+                if (!response.ok) {
+                    throw new Error(`Ошибка запроса: ${response.status}`);
+                }
+    
+                const data = await response.json();
+                const geoObject = data[0];
+                if (!geoObject) {
+                    throw new Error("Не удалось найти координаты для данного адреса.");
+                }
+    
+                return {
+                    lat: parseFloat(geoObject.lat),
+                    lon: parseFloat(geoObject.lon),
+                };
+            });
+    
+            const results = await Promise.all(promises);
+    
+  
+            setInputRoutesLoc(results);
+            console.log('All coordinates added:', results);
+    
+            closeModal();
+        } catch (error) {
+            console.log('Error:', error);
+        }
+    };
 
     return (
         <div className="container">
             <div className="mapBolck">
-                <MyMap userLocation={coordinates} routeObjs={[{ lat: 53.906, lon: 27.5308 }, { lat: 53.706, lon: 27.3308 }, { lat: 53.8606, lon: 27.5108 }]} />
+                <MyMap routeObjs={inputRoutesLoc} setClickLocation={setClickLocation} isGetLocation={isGetLocation} setIsGetLocation={setIsGetLocation}/>
             </div>
             <div className="infoBlock">
-                <Button text="add route" buttonImg={createRouteImg} onClick={() => openModal()} />
-                <Button text="add route" buttonImg={completeRouteImg} onClick={() => alert('add route')} />
-                <CreateRoute isOpen={isModalOpen} onClose={closeModal} />
+                <Button text="Create Route" buttonImg={createRouteImg} onClick={() => openModal()} />
+                <Button text="Get Route" buttonImg={completeRouteImg} onClick={() => openModalGetRoute()} />
+                <CreateRoute routes={inputRoutes} isOpen={GetIsOpenCreateRouteModal} setRoutes={setInputRoutes} setIsGetLocation={setIsGetLocation} onClose={closeModal} createRouteClick={getRouteCoord} setId={setIdInputRoute} />
+                <GetRoute isOpen={isModalGetRouteOpen} onClose={closeModalGetRoute}></GetRoute>
                 <div className="textContainer"></div>
                 <div className="resultContainer"></div>
             </div>
