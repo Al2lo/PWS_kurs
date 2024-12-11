@@ -8,7 +8,21 @@ namespace VeloMap.Domain.RouteService.Configuration
     {
         public void Configure(EntityTypeBuilder<Point> builder)
         {
+            builder.ToTable("Points")
+               .HasKey(x => x.Id);
 
+            builder.Property(x => x.Id)
+                .ValueGeneratedOnAdd();
+
+            builder.Property(x => x.Latitude)
+                .HasMaxLength(50)
+                .IsRequired()
+                .HasColumnType("varchar");
+
+            builder.Property(x => x.Longitude)
+                .HasMaxLength(50)
+                .IsRequired()
+                .HasColumnType("varchar");
         }
     }
 }

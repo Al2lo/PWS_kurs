@@ -8,7 +8,17 @@ namespace VeloMap.Domain.RouteService.Configuration
     {
         public void Configure(EntityTypeBuilder<FavoriteRoute> builder)
         {
+            builder.ToTable("FavoriteRoutes")
+               .HasKey(x => x.Id);
 
+            builder.Property(x => x.UserId)
+                .IsRequired()
+                .HasColumnType("int");
+
+            builder.HasOne(fr => fr.Route)
+                .WithMany(r => r.FavoriteRoutes)
+                .HasForeignKey(fr => fr.RouteId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

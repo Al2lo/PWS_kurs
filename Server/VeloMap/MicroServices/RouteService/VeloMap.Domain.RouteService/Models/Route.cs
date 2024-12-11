@@ -6,13 +6,14 @@
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string Distance { get; set; } = string.Empty;
-        public DateTime CreateDaet { get; set; }    
+        public DateTime CreateDate { get; set; }    
         public bool IsPublic { get; set; }
         public float Rating { get; set; }
         public int UserId { get; set; }
 
         public ICollection<RoutePoint> RoutePoints { get; set; } = new List<RoutePoint>();
         public ICollection<FavoriteRoute> FavoriteRoutes { get; set; } = new List<FavoriteRoute>();
+        public ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
     }
 }

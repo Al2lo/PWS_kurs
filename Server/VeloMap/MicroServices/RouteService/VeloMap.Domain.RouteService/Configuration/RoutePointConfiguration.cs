@@ -8,7 +8,23 @@ namespace VeloMap.Domain.RouteService.Configuration
     {
         public void Configure(EntityTypeBuilder<RoutePoint> builder)
         {
+            builder.ToTable("RoutePoints")
+                .HasKey(x => x.Id);
 
+            builder.Property(rp => rp.OrderIndex)
+                .IsRequired()
+                .HasColumnType("int");
+
+            builder.HasOne(rp => rp.Route)
+                .WithMany(r => r.RoutePoints) 
+                .HasForeignKey(rp => rp.RouteId)  
+                .OnDelete(DeleteBehavior.Cascade);
+
+
+            builder.HasOne(rp => rp.Point) 
+                .WithMany()
+                .HasForeignKey(rp => rp.PoinId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
