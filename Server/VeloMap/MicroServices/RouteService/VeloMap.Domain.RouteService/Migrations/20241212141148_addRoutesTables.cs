@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VeloMap.Domain.RouteService.Migrations
 {
     /// <inheritdoc />
-    public partial class initRouteService : Migration
+    public partial class addRoutesTables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -96,30 +96,21 @@ namespace VeloMap.Domain.RouteService.Migrations
                 name: "RoutePoints",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RouteId = table.Column<int>(type: "int", nullable: false),
-                    PoinId = table.Column<int>(type: "int", nullable: false),
-                    OrderIndex = table.Column<int>(type: "int", nullable: false),
-                    PointId = table.Column<int>(type: "int", nullable: true)
+                    PointsId = table.Column<int>(type: "int", nullable: false),
+                    RoutesId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RoutePoints", x => x.Id);
+                    table.PrimaryKey("PK_RoutePoints", x => new { x.PointsId, x.RoutesId });
                     table.ForeignKey(
-                        name: "FK_RoutePoints_Points_PoinId",
-                        column: x => x.PoinId,
+                        name: "FK_RoutePoints_Points_PointsId",
+                        column: x => x.PointsId,
                         principalTable: "Points",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_RoutePoints_Points_PointId",
-                        column: x => x.PointId,
-                        principalTable: "Points",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_RoutePoints_Routes_RouteId",
-                        column: x => x.RouteId,
+                        name: "FK_RoutePoints_Routes_RoutesId",
+                        column: x => x.RoutesId,
                         principalTable: "Routes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -141,19 +132,9 @@ namespace VeloMap.Domain.RouteService.Migrations
                 column: "RouteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RoutePoints_PoinId",
+                name: "IX_RoutePoints_RoutesId",
                 table: "RoutePoints",
-                column: "PoinId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RoutePoints_PointId",
-                table: "RoutePoints",
-                column: "PointId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RoutePoints_RouteId",
-                table: "RoutePoints",
-                column: "RouteId");
+                column: "RoutesId");
         }
 
         /// <inheritdoc />

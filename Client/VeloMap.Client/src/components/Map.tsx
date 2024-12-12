@@ -2,8 +2,9 @@ import { useEffect, useState, useRef } from "react";
 import { MapInterface } from "../models/models";
 import getMyLocation from '../assets/getMyLocation.png';
 import myLocation from '../assets/myLocation.png';
+import { RouteService } from "../Services/RouteService";
 
-const MyMap: React.FC<MapInterface> = ({ routeObjs, setClickLocation ,setIsGetLocation }) => {
+const MyMap: React.FC<MapInterface> = ({ points, routeInfo, setClickLocation ,setIsGetLocation }) => {
   const [userPlacemark, setUserPlacemark] = useState<any>(null); 
   const [currentRoute, setCurrentRoute] = useState<any>(null); 
   const [location, setLocation] = useState<{ lat: number; lon: number }>({ lat: 53.906, lon: 27.5308 }); 
@@ -85,7 +86,7 @@ const MyMap: React.FC<MapInterface> = ({ routeObjs, setClickLocation ,setIsGetLo
         document.head.removeChild(existingScript);
       }
     };
-  }, [location, routeObjs]);
+  }, [location, points]);
   
   useEffect(() => {
     if (mapInstanceRef.current && location) {
@@ -114,15 +115,15 @@ const MyMap: React.FC<MapInterface> = ({ routeObjs, setClickLocation ,setIsGetLo
 
   // Построение маршрута
   useEffect(() => {
-    if (mapInstanceRef.current && routeObjs) {
-      console.log(routeObjs)
+    if (mapInstanceRef.current && points) {
+      console.log(points)
       if (currentRoute) {
         mapInstanceRef.current.geoObjects.remove(currentRoute);
       }
 
       const multiRoute = new window.ymaps.multiRouter.MultiRoute(
         {
-          referencePoints: routeObjs.map((point) => [point.lat, point.lon]),
+          referencePoints: points.map((point) => [point.Lat, point.Lon]),
           params: {
             routingMode: "bicycle",
           },
@@ -131,11 +132,29 @@ const MyMap: React.FC<MapInterface> = ({ routeObjs, setClickLocation ,setIsGetLo
           boundsAutoApply: true,
         }
       );
+  
+      if (points.length > 0) {
+        RouteService.createRoute({
+          Title: routeInfo.titleRoute,
+          Description: routeInfo.descriptionRoute,
+          Distance: '17', // Убедитесь, что у вас есть правильная дистанция
+          CreateDate: new Date(),
+          IsPublic: true,
+          UserId: 0,
+          Points: points,
+        })
+          .then(() => {
+            alert('Route saved');
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
 
       mapInstanceRef.current.geoObjects.add(multiRoute);
       setCurrentRoute(multiRoute);
     }
-  }, [routeObjs]); // Следим за изменениями в маршруте
+  }, [points]); // Следим за изменениями в маршруте
 
   return (
     <div className="map-container">

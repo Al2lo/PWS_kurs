@@ -13,7 +13,6 @@ namespace VeloMap.Domain.RouteService.Data
     {
         public DbSet<Route> Routes { get; set; } = null!;
         public DbSet<Point> Points { get; set; } = null!;
-        public DbSet<RoutePoint> RoutePoints { get; set; } = null!;
         public DbSet<FavoriteRoute> FavoriteRoutes { get; set; } = null!;
         public DbSet<Comment> Comments { get; set; } = null!;
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)

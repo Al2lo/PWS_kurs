@@ -11,7 +11,7 @@
         public float Rating { get; set; }
         public int UserId { get; set; }
 
-        public ICollection<RoutePoint> RoutePoints { get; set; } = new List<RoutePoint>();
+        public ICollection<Point> Points { get; set; } = new List<Point>();
         public ICollection<FavoriteRoute> FavoriteRoutes { get; set; } = new List<FavoriteRoute>();
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();
 

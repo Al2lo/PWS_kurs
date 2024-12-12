@@ -12,8 +12,8 @@ using VeloMap.Domain.RouteService.Data;
 namespace VeloMap.Domain.RouteService.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20241211152757_initRouteService")]
-    partial class initRouteService
+    [Migration("20241212141148_addRoutesTables")]
+    partial class addRoutesTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,21 @@ namespace VeloMap.Domain.RouteService.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("PointRoute", b =>
+                {
+                    b.Property<int>("PointsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoutesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PointsId", "RoutesId");
+
+                    b.HasIndex("RoutesId");
+
+                    b.ToTable("RoutePoints", (string)null);
+                });
 
             modelBuilder.Entity("VeloMap.Domain.RouteService.Models.Comment", b =>
                 {
@@ -142,35 +157,19 @@ namespace VeloMap.Domain.RouteService.Migrations
                     b.ToTable("Routes", (string)null);
                 });
 
-            modelBuilder.Entity("VeloMap.Domain.RouteService.Models.RoutePoint", b =>
+            modelBuilder.Entity("PointRoute", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.HasOne("VeloMap.Domain.RouteService.Models.Point", null)
+                        .WithMany()
+                        .HasForeignKey("PointsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("OrderIndex")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PoinId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("PointId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RouteId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PoinId");
-
-                    b.HasIndex("PointId");
-
-                    b.HasIndex("RouteId");
-
-                    b.ToTable("RoutePoints", (string)null);
+                    b.HasOne("VeloMap.Domain.RouteService.Models.Route", null)
+                        .WithMany()
+                        .HasForeignKey("RoutesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("VeloMap.Domain.RouteService.Models.Comment", b =>
@@ -202,37 +201,9 @@ namespace VeloMap.Domain.RouteService.Migrations
                     b.Navigation("Route");
                 });
 
-            modelBuilder.Entity("VeloMap.Domain.RouteService.Models.RoutePoint", b =>
-                {
-                    b.HasOne("VeloMap.Domain.RouteService.Models.Point", "Point")
-                        .WithMany()
-                        .HasForeignKey("PoinId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("VeloMap.Domain.RouteService.Models.Point", null)
-                        .WithMany("RoutePoints")
-                        .HasForeignKey("PointId");
-
-                    b.HasOne("VeloMap.Domain.RouteService.Models.Route", "Route")
-                        .WithMany("RoutePoints")
-                        .HasForeignKey("RouteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Point");
-
-                    b.Navigation("Route");
-                });
-
             modelBuilder.Entity("VeloMap.Domain.RouteService.Models.Comment", b =>
                 {
                     b.Navigation("ChildComments");
-                });
-
-            modelBuilder.Entity("VeloMap.Domain.RouteService.Models.Point", b =>
-                {
-                    b.Navigation("RoutePoints");
                 });
 
             modelBuilder.Entity("VeloMap.Domain.RouteService.Models.Route", b =>
@@ -240,8 +211,6 @@ namespace VeloMap.Domain.RouteService.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("FavoriteRoutes");
-
-                    b.Navigation("RoutePoints");
                 });
 #pragma warning restore 612, 618
         }

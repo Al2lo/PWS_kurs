@@ -4,25 +4,22 @@
     justify-content: space-between; /* Распределение элементов по горизонтали */
     gap: 10px; /* Промежуток между полем ввода и кнопкой */
     padding: 10px; /* Внутренний отступ */
-    border: 1px solid #ddd; /* Легкая граница */
     border-radius: 8px; /* Скругленные углы */
-    background-color: #f9f9f9; /* Цвет фона */
     width: 500px; /* Ширина контейнера */
-    margin: 10px auto; /* Центрирование контейнера на странице */
+    margin: 5px auto; /* Центрирование контейнера на странице */
   }
   
   .routeInput-container input {
     flex-grow: 1; /* Поле ввода растягивается, чтобы занять доступное пространство */
     padding: 8px 12px; /* Отступы внутри поля ввода */
-    border: 1px solid #ccc; /* Граница для поля ввода */
     border-radius: 4px; /* Скругленные углы для поля ввода */
-    font-size: 14px; /* Размер шрифта */
+    font-size: 16px; /* Размер шрифта */
     outline: none; /* Убираем контур по умолчанию при фокусе */
     transition: border-color 0.3s; /* Плавный переход при изменении границы */
   }
   
   .routeInput-container input:focus {
-    border-color: #4a90e2;
+    border-color: #f39c12;
   }
   
   .delete-button {

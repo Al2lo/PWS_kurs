@@ -6,6 +6,6 @@
         public string Latitude { get; set; } = string.Empty;
         public string Longitude { get; set; } = string.Empty;
 
-        public ICollection<RoutePoint> RoutePoints { get; set; } = new List<RoutePoint>();
+        public ICollection<Route> Routes { get; set; } = new List<Route>();
     }
 }

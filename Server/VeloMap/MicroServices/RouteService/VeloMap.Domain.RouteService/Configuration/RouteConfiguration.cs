@@ -48,10 +48,9 @@ namespace VeloMap.Domain.RouteService.Configuration
                 .IsRequired()
                 .HasColumnType("int");
 
-            builder.HasMany(r => r.RoutePoints)
-                .WithOne(rp => rp.Route)
-                .HasForeignKey(rp => rp.RouteId)
-                .OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(r => r.Points)
+                .WithMany(rp => rp.Routes)
+                .UsingEntity(j => j.ToTable("RoutePoints"));
 
             builder.HasMany(r => r.FavoriteRoutes)
                 .WithOne(fr => fr.Route)
