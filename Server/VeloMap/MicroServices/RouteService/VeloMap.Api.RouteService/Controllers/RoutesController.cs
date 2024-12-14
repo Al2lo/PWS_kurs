@@ -16,17 +16,51 @@ namespace VeloMap.Api.RouteService.Controllers
             _routeService = routeService;
         }
 
-        [HttpGet]
+        [HttpGet("public")]
         public async Task<ActionResult<List<Route>>> GetPublicRoutesAsync()
         {
             var publicRoutes = await _routeService.GetPublicRoutesAsync();
+
             return Ok(publicRoutes);
         }
 
+        [HttpGet("favorities")]
+        public async Task<ActionResult<List<Route>>> GetFavoriteRoutesAsync([FromQuery] int userId)
+        {
+            var favoriteRoutes = await _routeService.GetFavoriteRoutesAsync(userId);
+
+            return Ok(favoriteRoutes);
+        }
+
+        [HttpGet("user")]
+        public async Task<ActionResult<List<Route>>> GetUserRoutesAsync([FromQuery] int userId)
+        {
+            var routes = await _routeService.GetUserRoutesAsync(userId);
+
+            return Ok(routes);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<RouteDto>> GetRouteAsync([FromQuery] int id, [FromQuery] int userId)
+        {
+            var routes = await _routeService.GetRouteAsync(id, userId);
+
+            return Ok(routes);
+        }
+
         [HttpPost]
-        public async Task<ActionResult> CreateRouteAsync([FromBody] CreateRouteDTO createRoute, CancellationToken token)
+        public async Task<ActionResult> CreateRouteAsync([FromBody] CreateRouteDto createRoute, CancellationToken token)
         {
             await _routeService.CreateRouteAsync(createRoute, token);
+
+            return Ok();
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateRouteAsync([FromBody] CreateRouteDto updateRoute)
+        {
+            await _routeService.UpdateRouteAsync(updateRoute);
+
             return Ok();
         }
     }

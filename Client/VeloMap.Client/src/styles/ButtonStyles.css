@@ -4,7 +4,7 @@
     justify-content: space-between;
     margin: 10px;
     max-width: 476px;
-    height: 90px;
+    min-height: 90px;
     color: white;
     border: none;
     border-radius: 30px;

@@ -3,8 +3,11 @@ import { MapInterface } from "../models/models";
 import getMyLocation from '../assets/getMyLocation.png';
 import myLocation from '../assets/myLocation.png';
 import { RouteService } from "../Services/RouteService";
+import { useAppDispathc } from "../store/hooks";
+import { updateRoute } from "../store/route/routeSlice";
 
 const MyMap: React.FC<MapInterface> = ({ points, routeInfo, setClickLocation ,setIsGetLocation }) => {
+  const dispatch = useAppDispathc();
   const [userPlacemark, setUserPlacemark] = useState<any>(null); 
   const [currentRoute, setCurrentRoute] = useState<any>(null); 
   const [location, setLocation] = useState<{ lat: number; lon: number }>({ lat: 53.906, lon: 27.5308 }); 
@@ -132,19 +135,22 @@ const MyMap: React.FC<MapInterface> = ({ points, routeInfo, setClickLocation ,se
           boundsAutoApply: true,
         }
       );
-  
+
+      const route = {
+        Title: routeInfo.titleRoute,
+        Description: routeInfo.descriptionRoute,
+        Distance: '17', // Убедитесь, что у вас есть правильная дистанция
+        CreateDate: new Date(),
+        IsPublic: true,
+        UserId: 0,
+        Points: points,
+      };
+
       if (points.length > 0) {
-        RouteService.createRoute({
-          Title: routeInfo.titleRoute,
-          Description: routeInfo.descriptionRoute,
-          Distance: '17', // Убедитесь, что у вас есть правильная дистанция
-          CreateDate: new Date(),
-          IsPublic: true,
-          UserId: 0,
-          Points: points,
-        })
+        RouteService.createRoute(route)
           .then(() => {
             alert('Route saved');
+            dispatch(updateRoute(route))
           })
           .catch((error) => {
             console.error(error);

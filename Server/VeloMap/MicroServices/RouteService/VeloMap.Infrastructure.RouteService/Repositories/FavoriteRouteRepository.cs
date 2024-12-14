@@ -11,7 +11,7 @@ namespace VeloMap.Infrastructure.RouteService.Repositories
 
         public async Task<List<FavoriteRoute>> GetByUserIdAsync(int userId)
         {
-            return await _table.Where(x => x.UserId == userId).ToListAsync();
+            return await _table.Include(x => x.Route).Where(x => x.UserId == userId).ToListAsync();
         }
     }
 }

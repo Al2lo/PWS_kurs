@@ -27,3 +27,25 @@ export interface Route{
 }
 
 
+export interface RouteAlias{
+    id:number;
+    title: string;
+    createDate: string;
+}
+
+export interface PointRouteInfo {
+    lon: string;
+    lat: string;
+}
+
+export interface FullInfoRoute{
+    id: number
+    title: string;
+    description:string;
+    distance: string;
+    createDate: string;
+    isPublic: boolean;
+    userId: number;
+    isLike: boolean;
+    points: PointRouteInfo[];
+}

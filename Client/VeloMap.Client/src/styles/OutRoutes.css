@@ -1,0 +1,62 @@
+/* OutRoutes.css */
+
+.list-container {
+    padding: 20px;
+    background-color: #1a1a1a; /* Черный фон */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    height: 100%; /* На всю высоту контейнера */
+    overflow-y: auto; /* Вертикальная прокрутка */
+  }
+  
+  .item-list {
+    font-size: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    margin: 8px 0;
+    background-color: #262626; /* Темно-серый для контраста */
+    color: #ffa500; /* Оранжевый текст */
+    border: 1px solid #ffa500; /* Оранжевая рамка */
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+  }
+  
+  .list-item:hover {
+    background-color: #333333; /* Светлее при наведении */
+    box-shadow: 0 2px 5px rgba(255, 165, 0, 0.5);
+  }
+  
+  .list-item:active {
+    transform: scale(0.98);
+  }
+  
+  .list-item:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #ffa500; /* Оранжевая рамка фокуса */
+  }
+  
+  .item-id {
+    margin-right: 10px; /* Расстояние между ID и Title */
+    font-weight: bold;
+  }
+  
+  .item-title {
+    flex-grow: 1;
+    margin-right: 10px; /* Расстояние между Title и Date */
+    text-align: left;
+  }
+  
+  .item-date {
+    color: #cccccc; /* Светло-серый для даты */
+    font-size: 0.9em;
+    text-align: right;
+  }

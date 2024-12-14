@@ -1,6 +1,6 @@
 ﻿namespace VeloMap.Application.RouteService.DTOs.RouteDTO
 {
-    public class CreateRouteDTO
+    public class CreateRouteDto
     {
         public string? Title { get; init; }
         public string? Description { get; init; }

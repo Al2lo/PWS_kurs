@@ -1,0 +1,93 @@
+.RouteInfo-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7); /* Темный полупрозрачный фон */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .RouteInfo-modal-content {
+    font-size: 20px;
+    background-color: #1f1f1f; /* Тёмный фон для модального окна */
+    width: 700px;
+    height: 700px;
+    padding: 20px 30px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    position: relative;
+    color: #fff; /* Белый текст */
+  }
+  
+  .RouteInfo-close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: #ffa500; /* Оранжевый цвет для кнопки закрытия */
+    cursor: pointer;
+  }
+  
+  .RouteInfo-close-button:hover {
+    color: #ff7f00; /* Темнее оранжевый при наведении */
+  }
+  
+  .RouteInfo-info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Увеличиваем отступы между строками */
+  }
+  
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #333; /* Тонкая линия между строками */
+  }
+  
+  .info-row strong {
+    font-weight: bold;
+    color: #ffa500; /* Оранжевый для заголовков */
+  }
+  
+  .info-row span {
+    color: #ddd; /* Слабый светлый цвет для значений */
+  }
+  
+  ul {
+    padding-left: 20px;
+    margin: 0;
+    color: #ddd; /* Светлый цвет для списка */
+  }
+  
+  ul li {
+    list-style-type: disc;
+    margin-bottom: 5px;
+  }
+
+  .select-button {
+    width: 80px; /* Увеличиваем ширину */
+    height: 50px; /* Увеличиваем высоту */
+    align-self: flex-end;
+    background-color: #F07800; /* Оранжевый фон */
+    border: none;
+    border-radius: 20px; /* Закругляем края */
+    color: #fff; /* Белый текст, если нужно */
+    font-size: 16px; /* Размер шрифта */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s; /* Плавный переход */
+  }
+  
+  .select-button:hover {
+    background-color: #c06204; /* Оранжевый цвет при наведении (темнее) */
+    transform: scale(1.1); /* Увеличение кнопки при наведении */
+  }
+  

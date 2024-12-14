@@ -23,5 +23,17 @@ namespace VeloMap.Infrastructure.RouteService.Repositories
         {
             await AddAsync(route, token);
         }
+
+        public override async Task<Route> GetByIdAsync(int id)
+        {
+            var item = await _table
+                .Include(x => x.Points)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (item == null)
+                throw new Exception("Element not found");
+
+            return item;
+        }
     }
 }

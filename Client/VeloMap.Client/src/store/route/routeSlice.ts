@@ -1,0 +1,35 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import type { RootState } from '../store'
+import { Route } from '../../models/models'
+
+// Define a type for the slice state
+interface RouteState {
+    route: Route | null
+    isLike: boolean
+}
+
+// Define the initial state using that type
+const initialState: RouteState = {
+  route: null,
+  isLike: false
+}
+
+export const routeSlice = createSlice({
+  name: 'route',
+  initialState,
+  reducers: {
+    updateRoute: (state, action: PayloadAction<Route>) => {
+        state.route = action.payload;
+    },
+    updateIsLike:(state, action: PayloadAction<boolean>) => {
+      state.isLike = action.payload;
+    }
+  }
+})
+
+export const { updateRoute, updateIsLike } = routeSlice.actions
+
+// Other code such as selectors can use the imported `RootState` type
+export const selectCount = (state: RootState) => state.route
+
+export default routeSlice.reducer

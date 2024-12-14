@@ -31,7 +31,7 @@ namespace VeloMap.Infrastructure.RouteService.Repositories
             return await _table.AsNoTracking().ToListAsync<T>();
         }
 
-        public async Task<T> GetByIdAsync(int id)
+        public virtual async Task<T> GetByIdAsync(int id)
         {
             var item = await _table.FindAsync(id);
 
