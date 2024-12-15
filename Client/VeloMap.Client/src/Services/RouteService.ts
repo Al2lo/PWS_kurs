@@ -1,11 +1,11 @@
 import { instance } from "../api/axios.api";
-import { FullInfoRoute, Route, RouteAlias } from "../models/models";
+import { CreateRoute, FavoriteRoute, FullInfoRoute, Route, RouteAlias } from "../models/models";
 
 export const RouteService ={
 
     async createRoute(
-        routeData: Route
-    ): Promise<any>{
+        routeData: CreateRoute
+    ): Promise<{id: number}>{
         const {data} = await instance.post('routes', routeData);
         return data;
     },
@@ -49,5 +49,26 @@ export const RouteService ={
           },
         });
         return data;
-      }
+      },
+
+      async createFavoriteRoute(
+        favoriteRoute: FavoriteRoute
+    ): Promise<any>{
+        const {data} = await instance.post('routes/favorite', favoriteRoute);
+        return data;
+    },
+
+    async deleteFavoriteRoute(
+      favoriteRoute: FavoriteRoute
+  ): Promise<any>{
+      const {data} = await instance.delete('routes/favorite', {
+        params: {
+          UserId: favoriteRoute.userId,
+          RouteId: favoriteRoute.routeId
+        },
+      });      
+      return data;
+  },
+
+    
 }

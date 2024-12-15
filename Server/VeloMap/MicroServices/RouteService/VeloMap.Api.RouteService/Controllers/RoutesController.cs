@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using VeloMap.Application.RouteService.DTOs.FavoriteRouteDTO;
 using VeloMap.Application.RouteService.DTOs.RouteDTO;
 using VeloMap.Application.RouteService.Services.Interfaces;
 
@@ -51,15 +52,30 @@ namespace VeloMap.Api.RouteService.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateRouteAsync([FromBody] CreateRouteDto createRoute, CancellationToken token)
         {
-            await _routeService.CreateRouteAsync(createRoute, token);
-
-            return Ok();
+            var id = await _routeService.CreateRouteAsync(createRoute, token);
+            return Ok(new { id });
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdateRouteAsync([FromBody] CreateRouteDto updateRoute)
         {
             await _routeService.UpdateRouteAsync(updateRoute);
+
+            return Ok();
+        }
+
+        [HttpPost("favorite")]
+        public async Task<IActionResult> CreateFavoriteRoute([FromBody] CreateFavoriteRouteDto createFavoriteRouteDto, CancellationToken token)
+        {
+            await _routeService.CreateFovoriteRouteAsync(createFavoriteRouteDto, token);
+
+            return Ok();
+        }
+
+        [HttpDelete("favorite")]
+        public async Task<IActionResult> DeleteFavoriteRoute([FromQuery] CreateFavoriteRouteDto createFavoriteRouteDto)
+        {
+            await _routeService.DeleteFovoriteRouteAsync(createFavoriteRouteDto);
 
             return Ok();
         }

@@ -25,7 +25,7 @@ interface OutRoutesProps {
             <li
               key={route.id}
               className="list-item"
-              onDoubleClick={() => {setRouteId(route.id);alert(route.id); setIsOpen(true);}}
+              onDoubleClick={() => {setRouteId(route.id); setIsOpen(true);}}
             >
                 <span className="item-id">{route.id}</span>
                 <span className="item-title">{route.title}</span>

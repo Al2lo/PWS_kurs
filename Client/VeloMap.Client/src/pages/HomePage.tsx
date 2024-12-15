@@ -5,7 +5,7 @@ import Button from "../components/Button";
 import createRouteImg from '../assets/createRoute.png';
 import completeRouteImg from '../assets/completeRoutes.png';
 import CreateRoute from "../components/CreateRoute";
-import { Point, RouteTitle } from "../models/models";
+import { FavoriteRoute, Point, RouteTitle } from "../models/models";
 import GetRoute from "../components/GetRoute";
 import { useRoute, useRouteLike } from "../hooks/routeHooks";
 import { RouteService } from "../Services/RouteService";
@@ -18,10 +18,14 @@ const HomePage: FC = () => {
     const dispatch = useAppDispathc();
     const isLIke = useRouteLike();
     const route = useRoute();
+    const [routeId, setRouteId] = useState<number | null>(null);
     const [isModalCreateRouteOpen, setIsModalCreateRouteOpen] = useState(false);
     const [isModalGetRouteOpen, setIsModalGetRouteOpen] = useState(false);
     const [inputRoutes, setInputRoutes] = useState<RouteTitle[]>([{id: "1", text: ""}, {id: "2", text: ""}]);
-    const [inputRoutesLoc, setInputRoutesLoc] = useState<Point[]>([{ Lat: 53.906, Lon: 27.5308 }, { Lat: 53.706, Lon: 27.1308 }]);
+    const inputRoutesLoc = useRef<Point[]>([
+        { Lat: 53.906, Lon: 27.5308 },
+        { Lat: 53.706, Lon: 27.1308 },
+      ]);
     const idInputRouteRef = useRef("");
     const [isGetLocation, setIsGetLocation] = useState<boolean>(false);
     const [titleRoute, setTitleRoute] = useState<string>("");
@@ -49,8 +53,21 @@ const HomePage: FC = () => {
 
     const handleToggleLike = () => {
         if(route != null && route.UserId != null)
-            setIsLiked(!isLiked);
-        //запрос на favoriteROutes
+        {   
+            var favoriteRoute : FavoriteRoute = { userId: Number(UserId), routeId: route.Id };
+            if(isLiked)
+            {
+                RouteService.deleteFavoriteRoute(favoriteRoute)
+                .then(()=>{setIsLiked(!isLiked);})
+                .catch(()=>alert('error'));
+            }
+            else
+            {
+                RouteService.createFavoriteRoute(favoriteRoute)
+                .then(()=>{setIsLiked(!isLiked);})
+                .catch(()=>alert('error'));
+            }
+        }
     };
 
     const handleTogglePublic = () => {
@@ -61,6 +78,41 @@ const HomePage: FC = () => {
     const setIdInputRoute = (id: string) => {
         idInputRouteRef.current = id;
     };
+
+    const CreateRouteFunc = () => {
+
+        alert('createRoute')
+        var route = {
+          Title: titleRoute,
+          Description: descriptionRoute,
+          Distance: '17',
+          CreateDate: new Date(),
+          IsPublic: true,
+          UserId: 0,
+          Points: inputRoutesLoc.current,
+        };
+  
+        RouteService.createRoute(route)
+
+    .then((response) => {
+      const id = response.id;
+      alert('Route created lll ' + id);
+      dispatch(updateRoute({
+        Id: id, 
+        Title: titleRoute,
+        Description: descriptionRoute,
+        Distance: '17',
+        CreateDate: new Date(),
+        IsPublic: true,
+        UserId: 0,
+        Points: inputRoutesLoc.current,
+      }));
+    })
+
+    .catch((error) => {
+      console.error('Error creating route:', error);
+    });
+    }
 
     const GetIsOpenCreateRouteModal = () => {
         if(isModalCreateRouteOpen && isGetLocation)
@@ -89,7 +141,7 @@ const HomePage: FC = () => {
 
     const getRouteCoord = async () => {
         try {
-            setInputRoutesLoc([]); 
+            inputRoutesLoc.current = []; 
     
             const promises = inputRoutes.map(async (router) => {
                 const address = router.text;
@@ -121,7 +173,12 @@ const HomePage: FC = () => {
 
             const results = await Promise.all(promises);
 
-            setInputRoutesLoc(results);
+            inputRoutesLoc.current = results;
+
+            if(isModalCreateRouteOpen)
+            {
+                CreateRouteFunc();
+            }
             
             closeModal();
         } catch (error) {
@@ -130,12 +187,18 @@ const HomePage: FC = () => {
         }
     };
 
+    let i:number = 0
+
     useEffect(() => {
         if (route) {
+            i++;
+            console.log(i)
+            console.log(route)
           setIsPublic(route.IsPublic);
           setTitleRouteUpdate(route.Title);
           setTitleDescriptionUpdate(route.Description);
-          setInputRoutesLoc(route.Points);
+          inputRoutesLoc.current = route.Points;
+          setRouteId(route.Id)
         }
       }, [route]);
 
@@ -152,31 +215,35 @@ const HomePage: FC = () => {
       }, [isLiked, isPublic, titleRouteUpdate, descriptionRouteUpdate]);
 
       const callUpdateRoute = () => {
-        let upRoute = {
-            Title: titleRouteUpdate,
-            Description: descriptionRouteUpdate,
-            Distance: route != null ? route.Distance : '17',
-            CreateDate: route != null ? route.CreateDate : new Date(),
-            IsPublic: isPublic,
-            UserId: 0,
-            Points: route != null ? route.Points : inputRoutesLoc,
-        };
+        if (routeId != null)
+        { 
+            let upRoute = {
+                Id: routeId,
+                Title: titleRouteUpdate,
+                Description: descriptionRouteUpdate,
+                Distance: route != null ? route.Distance : '17',
+                CreateDate: route != null ? route.CreateDate : new Date(),
+                IsPublic: isPublic,
+                UserId: 0,
+                Points: route != null ? route.Points : inputRoutesLoc.current,
+            };
 
-        RouteService.updateRoute(upRoute)
-          .then(() => {
+            RouteService.updateRoute(upRoute)
+            .then(() => {
             alert('Route saved');
             dispatch(updateRoute(upRoute))
-          })
-          .catch((error) => {
-            console.error(error);
-          });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+        }
       }
 
     return (
         <div className="container">
             <div className="mapBolck">
                 <MyMap 
-                points={inputRoutesLoc}
+                points={inputRoutesLoc.current}
                 routeInfo={{titleRoute: titleRoute, descriptionRoute:descriptionRoute}} 
                 setClickLocation={setClickLocation} 
                 isGetLocation={isGetLocation} 

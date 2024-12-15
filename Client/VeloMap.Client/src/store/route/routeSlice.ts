@@ -8,7 +8,6 @@ interface RouteState {
     isLike: boolean
 }
 
-// Define the initial state using that type
 const initialState: RouteState = {
   route: null,
   isLike: false

@@ -35,5 +35,27 @@ namespace VeloMap.Infrastructure.RouteService.Repositories
 
             return item;
         }
+
+        public async Task<int> GetRouteIdAsync(Route route)
+        {
+            return (await _table
+            .Include(x => x.Points)
+            .Where(item =>
+                item.UserId == route.UserId &&
+                item.Title == route.Title &&
+                item.Description == route.Description
+            )
+            .ToListAsync())
+            .Where(item =>
+                item.Points.All(point =>
+                    route.Points.Any(routePoint =>
+                        routePoint.Latitude == point.Latitude &&
+                        routePoint.Longitude == point.Longitude
+                    )
+                )
+            )
+            .Select(x => x.Id)
+            .First();
+        }
     }
 }

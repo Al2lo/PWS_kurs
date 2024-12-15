@@ -20,7 +20,7 @@ namespace VeloMap.Infrastructure.RouteService.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(T entity)
+        public virtual async Task DeleteAsync(T entity)
         {
             _table.Remove(entity);
             await _context.SaveChangesAsync();

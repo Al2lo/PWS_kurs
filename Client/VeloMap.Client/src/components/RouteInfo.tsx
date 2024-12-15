@@ -4,6 +4,7 @@ import '../styles/RouteInfoStyles.css'
 import { RouteService } from "../Services/RouteService";
 import { useDispatch } from "react-redux";
 import { updateIsLike, updateRoute } from "../store/route/routeSlice";
+import { useRoute } from "../hooks/routeHooks";
 
 interface ModalProps {
     routeId: number | null;
@@ -38,6 +39,7 @@ const RouteInfo: React.FC<ModalProps> = ({routeId, isOpen, onClose, closeOutRout
               });
             let date = new Date(routeInfo.createDate);
             let route = {
+                Id: routeInfo.id,
                 Title: routeInfo.title,
                 Description:routeInfo.description,
                 Distance: routeInfo.distance,

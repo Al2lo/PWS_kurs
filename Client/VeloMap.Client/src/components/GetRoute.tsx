@@ -44,7 +44,6 @@ interface ModalProps {
 
   
   const GetRoute: React.FC<ModalProps> = ({isOpen, onClose}) => {
-
     const [myRoutes, setMyRoutes] = useState<RouteAlias[]>([]);
     const [publicRoutes, setPublicRoutes] = useState<RouteAlias[]>([]);
     const [favoriteRoutes, setFavoriteRoutes] = useState<RouteAlias[]>([]);
@@ -83,10 +82,16 @@ interface ModalProps {
         setFavoriteRoutes(routes);
       };
     
-      fetchMyRoutes();
-      fetchPublicRoutes();
-      fetcFavoritehRoutes();
-    }, []);
+      if(isOpen)
+      {
+        alert('refresh')
+        fetchMyRoutes();
+        fetchPublicRoutes();
+        fetcFavoritehRoutes();
+      }
+
+    }, [isOpen]);
+
 
     if (!isOpen) return null;
   

@@ -1,4 +1,5 @@
-﻿using VeloMap.Application.RouteService.DTOs.PointDTO;
+﻿using VeloMap.Application.RouteService.DTOs.FavoriteRouteDTO;
+using VeloMap.Application.RouteService.DTOs.PointDTO;
 using VeloMap.Application.RouteService.DTOs.RouteDTO;
 using VeloMap.Application.RouteService.Services.Interfaces;
 using VeloMap.Domain.RouteService.Data.Repositories;
@@ -58,7 +59,7 @@ namespace VeloMap.Application.RouteService.Services
             return routeDto;
         }
 
-        public async Task CreateRouteAsync(CreateRouteDto createRoute, CancellationToken token)
+        public async Task<int> CreateRouteAsync(CreateRouteDto createRoute, CancellationToken token)
         {
             var newRoute = new Route() {
                 Title = createRoute.Title,
@@ -72,6 +73,10 @@ namespace VeloMap.Application.RouteService.Services
             };
 
             await _routeRepository.CreateRouteAsync(newRoute, token);
+
+            var routeId = await _routeRepository.GetRouteIdAsync(newRoute);
+
+            return routeId;
         }
 
         public async Task UpdateRouteAsync(CreateRouteDto updateRoute)
@@ -91,5 +96,26 @@ namespace VeloMap.Application.RouteService.Services
             await _routeRepository.UpdateAsync(newRoute);
         }
 
+        public async Task CreateFovoriteRouteAsync(CreateFavoriteRouteDto createFavoriteRouteDto, CancellationToken token)
+        {
+            var newFavoriteRoute = new FavoriteRoute()
+            {
+                UserId = createFavoriteRouteDto.UserId,
+                RouteId = createFavoriteRouteDto.RouteId,
+            };
+
+            await _favoriteRouteRepository.AddAsync(newFavoriteRoute, token);
+        }
+
+        public async Task DeleteFovoriteRouteAsync(CreateFavoriteRouteDto createFavoriteRouteDto)
+        {
+            var newFavoriteRoute = new FavoriteRoute()
+            {
+                UserId = createFavoriteRouteDto.UserId,
+                RouteId = createFavoriteRouteDto.RouteId,
+            };
+
+            await _favoriteRouteRepository.DeleteAsync(newFavoriteRoute);
+        }
     }
 }

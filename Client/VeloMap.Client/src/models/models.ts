@@ -17,6 +17,7 @@ export interface RouteTitle {
   }
 
 export interface Route{
+    Id: number;
     Title: string;
     Description:string;
     Distance: string;
@@ -26,6 +27,15 @@ export interface Route{
     Points: Point[];
 }
 
+export interface CreateRoute{
+    Title: string;
+    Description:string;
+    Distance: string;
+    CreateDate: Date;
+    IsPublic: boolean;
+    UserId: number;
+    Points: Point[];
+}
 
 export interface RouteAlias{
     id:number;
@@ -48,4 +58,10 @@ export interface FullInfoRoute{
     userId: number;
     isLike: boolean;
     points: PointRouteInfo[];
+}
+
+
+export interface FavoriteRoute{
+    userId: number;
+    routeId: number;
 }
