@@ -12,8 +12,8 @@ using VeloMap.Domain.AuthService.Data;
 namespace VeloMap.Domain.AuthService.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20241212140733_initDataBase")]
-    partial class initDataBase
+    [Migration("20241216203613_initDb")]
+    partial class initDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,9 +49,11 @@ namespace VeloMap.Domain.AuthService.Migrations
 
             modelBuilder.Entity("VeloMap.Domain.AuthService.Models.User", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
                         .IsRequired()

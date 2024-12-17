@@ -11,10 +11,11 @@ import { useRoute, useRouteLike } from "../hooks/routeHooks";
 import { RouteService } from "../Services/RouteService";
 import { useAppDispathc } from "../store/hooks";
 import { updateRoute } from "../store/route/routeSlice";
-
-const UserId = 1;
+import { toast } from "react-toastify";
+import { useUser } from "../hooks/userHooks";
 
 const HomePage: FC = () => {
+    const user = useUser();
     const dispatch = useAppDispathc();
     const isLIke = useRouteLike();
     const route = useRoute();
@@ -42,36 +43,36 @@ const HomePage: FC = () => {
     const closeModalGetRoute = () => setIsModalGetRouteOpen(false); 
 
     const handleTitleRouteUpdate = (title: string) => {
-        if(route != null && route.UserId == UserId)
+        if(route != null && user != null && route.UserId == user.id)
             setTitleRouteUpdate(title);
     };
 
     const handleDescriptionRouteUpdate = (title: string) => {
-        if(route != null && route.UserId == UserId)
+        if(route != null && user != null && route.UserId == user.id)
             setTitleDescriptionUpdate(title);
     };
 
     const handleToggleLike = () => {
-        if(route != null && route.UserId != null)
+        if(route != null && route.UserId != null && user != null)
         {   
-            var favoriteRoute : FavoriteRoute = { userId: Number(UserId), routeId: route.Id };
+            var favoriteRoute : FavoriteRoute = { userId: Number(user.id), routeId: route.Id };
             if(isLiked)
             {
                 RouteService.deleteFavoriteRoute(favoriteRoute)
                 .then(()=>{setIsLiked(!isLiked);})
-                .catch(()=>alert('error'));
+                .catch(()=>toast.error('error'));
             }
             else
             {
                 RouteService.createFavoriteRoute(favoriteRoute)
                 .then(()=>{setIsLiked(!isLiked);})
-                .catch(()=>alert('error'));
+                .catch(()=>toast.error('error'));
             }
         }
     };
 
     const handleTogglePublic = () => {
-        if(route != null && route.UserId == UserId)
+        if(route != null && user != null && route.UserId == user.id)
             setIsPublic(!isPublic);
     };
 
@@ -80,37 +81,40 @@ const HomePage: FC = () => {
     };
 
     const CreateRouteFunc = () => {
+        if(user == null)
+        {
+            toast.error("Incorrect user!")
+            return;
+        }
 
-        alert('createRoute')
         var route = {
           Title: titleRoute,
           Description: descriptionRoute,
           Distance: '17',
           CreateDate: new Date(),
           IsPublic: true,
-          UserId: 0,
+          UserId: user.id,
           Points: inputRoutesLoc.current,
         };
   
         RouteService.createRoute(route)
-
-    .then((response) => {
-      const id = response.id;
-      alert('Route created lll ' + id);
-      dispatch(updateRoute({
+        .then((response) => {
+        const id = response.id;
+        dispatch(updateRoute({
         Id: id, 
         Title: titleRoute,
         Description: descriptionRoute,
         Distance: '17',
         CreateDate: new Date(),
         IsPublic: true,
-        UserId: 0,
+        UserId: user.id,
         Points: inputRoutesLoc.current,
       }));
-    })
 
+      toast.success("Route was created")
+    })
     .catch((error) => {
-      console.error('Error creating route:', error);
+      toast.error(JSON.parse(error.response.data).Message);
     });
     }
 
@@ -145,7 +149,6 @@ const HomePage: FC = () => {
     
             const promises = inputRoutes.map(async (router) => {
                 const address = router.text;
-                console.log(address);
     
                 if (!address.trim()) {
                     throw new Error("Адрес не может быть пустым.");
@@ -182,23 +185,18 @@ const HomePage: FC = () => {
             
             closeModal();
         } catch (error) {
-            alert('error: ' + error)
-            console.log('Error:', error);
+            toast.error("Error: " + error);
         }
     };
 
-    let i:number = 0
-
     useEffect(() => {
         if (route) {
-            i++;
-            console.log(i)
-            console.log(route)
           setIsPublic(route.IsPublic);
           setTitleRouteUpdate(route.Title);
           setTitleDescriptionUpdate(route.Description);
           inputRoutesLoc.current = route.Points;
-          setRouteId(route.Id)
+          setRouteId(route.Id);
+          setUpdateButtonEnable(false);
         }
       }, [route]);
 
@@ -215,8 +213,18 @@ const HomePage: FC = () => {
       }, [isLiked, isPublic, titleRouteUpdate, descriptionRouteUpdate]);
 
       const callUpdateRoute = () => {
-        if (routeId != null)
+        if (routeId != null && user != null)
         { 
+            let updatRoute = {
+                Id: routeId,
+                Title: titleRouteUpdate,
+                Description: descriptionRouteUpdate,
+                Distance: route != null ? route.Distance : '17',
+                CreateDate: route != null ? route.CreateDate : new Date(),
+                IsPublic: isPublic,
+                UserId: user.id,
+            };
+            
             let upRoute = {
                 Id: routeId,
                 Title: titleRouteUpdate,
@@ -224,17 +232,17 @@ const HomePage: FC = () => {
                 Distance: route != null ? route.Distance : '17',
                 CreateDate: route != null ? route.CreateDate : new Date(),
                 IsPublic: isPublic,
-                UserId: 0,
+                UserId: user.id,
                 Points: route != null ? route.Points : inputRoutesLoc.current,
             };
-
-            RouteService.updateRoute(upRoute)
+            
+            RouteService.updateRoute(updatRoute)
             .then(() => {
-            alert('Route saved');
-            dispatch(updateRoute(upRoute))
+                toast.success('Route was updated');
+                dispatch(updateRoute(upRoute))
             })
             .catch((error) => {
-                console.error(error);
+               toast.error('error: ' + error);
             });
         }
       }

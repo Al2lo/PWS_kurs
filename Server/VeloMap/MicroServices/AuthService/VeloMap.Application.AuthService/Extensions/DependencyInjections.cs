@@ -25,16 +25,19 @@ namespace VeloMap.Application.AuthService.Extensions;
         services.AddTransient<IValidator<LoginUserDto>, LoginUserDtoValidator>();
         services.AddTransient<IValidator<CreateUserDto>, CreateUserDtoValidator>();
 
-        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+        services
+            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
             {
-                options.TokenValidationParameters = new TokenValidationParameters()
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateAudience = true,
                     ValidateIssuer = true,
+                    ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.SecretAccess))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.SecretAccess)),
+                    ValidIssuer = jwtOptions.Issuer,
+                    ValidAudience = jwtOptions.Audience
                 };
 
                 options.Events = new JwtBearerEvents
@@ -42,12 +45,21 @@ namespace VeloMap.Application.AuthService.Extensions;
                     OnMessageReceived = context =>
                     {
                         context.Token = context.Request.Cookies["access-token"];
-
+                        return Task.CompletedTask;
+                    },
+                    OnAuthenticationFailed = context =>
+                    {
+                        Console.WriteLine("Authentication failed: " + context.Exception.Message);
+                        return Task.CompletedTask;
+                    },
+                    OnChallenge = context =>
+                    {
+                        Console.WriteLine("Unauthorized access");
                         return Task.CompletedTask;
                     }
                 };
             });
-        
+
         return services;
         }
     }

@@ -26,6 +26,15 @@ export interface Route{
     UserId: number;
     Points: Point[];
 }
+export interface UpdateRoute{
+    Id: number;
+    Title: string;
+    Description:string;
+    Distance: string;
+    CreateDate: Date;
+    IsPublic: boolean;
+    UserId: number;
+}
 
 export interface CreateRoute{
     Title: string;
@@ -64,4 +73,22 @@ export interface FullInfoRoute{
 export interface FavoriteRoute{
     userId: number;
     routeId: number;
+}
+
+export interface RegisterUser{
+    Email: string;
+    Name: string;
+    Password: string;
+}
+
+export interface LoginUser{
+    email: string;
+    password: string;
+}
+
+export interface User{
+    name: string;
+    email: string;
+    role: number;
+    id: number;
 }

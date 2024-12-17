@@ -28,7 +28,7 @@ namespace VeloMap.Application.AuthService.Services
                 issuer: _options.Issuer,
                 audience: _options.Audience,
                 signingCredentials: signingCredentials,
-                expires: DateTime.UtcNow.AddMinutes(_options.Expires));
+                expires: DateTime.UtcNow.AddDays(_options.Expires));
 
             var tokenValue = new JwtSecurityTokenHandler().WriteToken(accessToken);
 
@@ -45,7 +45,7 @@ namespace VeloMap.Application.AuthService.Services
                 issuer: _options.Issuer,
                 audience: _options.Audience,
                 signingCredentials: signingCredentials,
-                expires: DateTime.UtcNow.AddMinutes(_options.Expires));
+                expires: DateTime.UtcNow.AddDays(_options.Expires));
 
             var tokenValue = new JwtSecurityTokenHandler().WriteToken(refreshToken);
 

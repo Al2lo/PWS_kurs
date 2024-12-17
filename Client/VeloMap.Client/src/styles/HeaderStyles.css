@@ -1,39 +1,98 @@
-header {
+/* Header */
+.header {
   display: flex;
-  justify-content: space-between; /* Распределяет пространство между логотипом и меню */
-  align-items: center; /* Выравнивает элементы по центру по вертикали */
-  background-color: #f8721f; /* Цвет фона для header */
-  padding: 20px;
-  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #1f1f1f; /* Темный фон для хедера */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
-.logo {
-  color: white; /* Цвет текста для логотипа */
-  text-decoration: none; /* Убирает подчеркивание */
-  font-size: 24px; /* Размер шрифта для логотипа */
+.header .logo {
+  font-size: 2rem; /* Увеличиваем размер шрифта для лого */
+  font-weight: bold;
+  color: #ff9900; /* Оранжевый текст для лого */
+  text-decoration: none;
 }
 
-.navbar {
-  /* Дополнительные стили для навигации, если нужно */
+.header .navbar {
+  display: flex;
 }
 
-.nav-list {
-  display: flex; /* Располагает элементы списка в строку */
-  list-style: none; /* Убирает маркеры списка */
-  margin: 0; /* Убирает отступы */
-  padding: 0; /* Убирает внутренние отступы */
+.header .nav-list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.nav-item {
-  margin-left: 20px; /* Отступ между элементами навигации */
+.header .nav-item {
+  margin-left: 30px;
 }
 
-.nav-link {
-  color: white; /* Цвет текста для ссылок */
-  text-decoration: none; /* Убирает подчеркивание */
-  font-size: 18px; /* Размер шрифта для ссылок */
+.header .nav-link {
+  text-decoration: none;
+  color: #ffffff; /* Белый текст для ссылок */
+  font-size: 1.2rem; /* Увеличиваем размер шрифта для ссылок */
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.nav-link:hover {
-  text-decoration: underline; /* Подчеркивание при наведении */
+.header .nav-link:hover {
+  background-color: #ff9900; /* Оранжевый фон при наведении */
+  color: #000000; /* Черный текст при наведении */
+}
+
+.header .active-nav-link {
+  background-color: #333333; /* Темно-серый фон для активных ссылок */
+}
+
+
+/* Стиль кнопки "Log out" */
+.logout-button {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  background-color: #ff9900;
+  color: black;
+}
+
+.logout-button:hover {
+  background-color: black;
+  color: #ff9900;
+  border: 1px solid #ff9900;
+}
+
+/* Стиль кнопки "Sign in" */
+.signin-button {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  background-color: #ff9900;
+  color: black;
+  text-decoration: none;
+}
+
+.signin-button:hover {
+  background-color: black;
+  color: #ff9900;
+  border: 1px solid #ff9900;
+}
+
+/* Иконка в кнопке */
+.button-icon {
+  margin-left: 0.5rem; /* Отступ между текстом и иконкой */
+  width: 20px; /* Ширина иконки */
+  height: 20px; /* Высота иконки */
 }

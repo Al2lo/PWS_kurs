@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VeloMap.Application.RouteService.DTOs.FavoriteRouteDTO;
 using VeloMap.Application.RouteService.DTOs.RouteDTO;
@@ -57,7 +57,7 @@ namespace VeloMap.Api.RouteService.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateRouteAsync([FromBody] CreateRouteDto updateRoute)
+        public async Task<IActionResult> UpdateRouteAsync([FromBody] UpdateRotueDto updateRoute)
         {
             await _routeService.UpdateRouteAsync(updateRoute);
 
@@ -65,7 +65,7 @@ namespace VeloMap.Api.RouteService.Controllers
         }
 
         [HttpPost("favorite")]
-        public async Task<IActionResult> CreateFavoriteRoute([FromBody] CreateFavoriteRouteDto createFavoriteRouteDto, CancellationToken token)
+        public async Task<IActionResult> CreateFavoriteRouteAsync([FromBody] CreateFavoriteRouteDto createFavoriteRouteDto, CancellationToken token)
         {
             await _routeService.CreateFovoriteRouteAsync(createFavoriteRouteDto, token);
 
@@ -73,9 +73,22 @@ namespace VeloMap.Api.RouteService.Controllers
         }
 
         [HttpDelete("favorite")]
-        public async Task<IActionResult> DeleteFavoriteRoute([FromQuery] CreateFavoriteRouteDto createFavoriteRouteDto)
+        public async Task<IActionResult> DeleteFavoriteRouteAsync([FromQuery] CreateFavoriteRouteDto createFavoriteRouteDto)
         {
             await _routeService.DeleteFovoriteRouteAsync(createFavoriteRouteDto);
+
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpDelete()]
+        public async Task<IActionResult> DeleteRouteAsync([FromQuery] int routeId)
+        {
+            var userId = User?.FindFirst("userId")?.Value;
+            if (userId == null)
+                throw new Exception("User not found");
+
+            await _routeService.DeleteRouteAsync(routeId, int.Parse(userId));
 
             return Ok();
         }

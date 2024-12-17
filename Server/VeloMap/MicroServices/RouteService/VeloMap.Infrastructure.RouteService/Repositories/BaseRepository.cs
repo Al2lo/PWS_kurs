@@ -5,7 +5,7 @@ namespace VeloMap.Infrastructure.RouteService.Repositories
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
-        private readonly DbContext _context;
+        public readonly DbContext _context;
         public readonly DbSet<T> _table;
 
         public BaseRepository(DbContext context)
@@ -41,7 +41,7 @@ namespace VeloMap.Infrastructure.RouteService.Repositories
             return item;
         }
 
-        public async Task UpdateAsync(T entity)
+        public virtual async Task UpdateAsync(T entity)
         {
             _table.Update(entity);
             await _context.SaveChangesAsync();

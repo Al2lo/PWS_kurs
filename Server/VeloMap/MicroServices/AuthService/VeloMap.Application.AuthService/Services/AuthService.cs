@@ -38,13 +38,17 @@ namespace VeloMap.Application.AuthService.Services
 
             await _userRepository.UpdateAsync(user);
 
-            var role = user.Role == (int)Role.Admin ? "Admin" : "User";
 
-            return new string[] { accessToken, refreshToken, user.Name, user.Email, role };
+            return new string[] { accessToken, refreshToken, user.Name, user.Email, user.Role.ToString(), user.Id.ToString() };
         }
 
         public async Task RegisterAsync(CreateUserDto createUser, CancellationToken cancellationToken)
         {
+            var user = await _userRepository.GetByEmailAsync(createUser.Email, cancellationToken);
+
+            if (user != null)
+                throw new Exception("This is email is used");
+
             var passwordSalt = new Random().Next(0, 100000000).ToString();
             var refreshToken = _tokenService.GenerateRefreshToken();
             var refrToken = new Token
@@ -55,7 +59,6 @@ namespace VeloMap.Application.AuthService.Services
             };
             var newUser = new User()
             {
-                Id = Guid.NewGuid(),
                 Email = createUser.Email,
                 Name = createUser.Name,
                 PasswordSalt = passwordSalt,
@@ -71,6 +74,27 @@ namespace VeloMap.Application.AuthService.Services
         public Task<bool> LogOutAsync(CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<UserDto> ReloginAsync(int userId)
+        {
+            var user = await _userRepository.GetByIdAsync(userId);
+
+            if (user == null)
+                throw new Exception();
+
+            if (user.IsBlocked)
+                throw new Exception("user is blocke by admin");
+
+            var retUser = new UserDto()
+            {
+                Name = user.Name,
+                Email = user.Email,
+                Id = user.Id,
+                Role = user.Role,
+            };
+
+            return retUser;
         }
     }
 }

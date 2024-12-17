@@ -85,9 +85,63 @@
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s; /* Плавный переход */
   }
-  
+
+.deleteRoute-button
+{
+  width: 80px; /* Увеличиваем ширину */
+  height: 50px; /* Увеличиваем высоту */
+  align-self: flex-start;
+  background-color: #F07800; /* Оранжевый фон */
+  border: none;
+  border-radius: 20px; /* Закругляем края */
+  color: #fff; /* Белый текст, если нужно */
+  font-size: 16px; /* Размер шрифта */
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s; /* Плавный переход */
+}
+.buttons-container
+{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
   .select-button:hover {
     background-color: #c06204; /* Оранжевый цвет при наведении (темнее) */
     transform: scale(1.1); /* Увеличение кнопки при наведении */
   }
   
+.comments-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Отступ между комментариями */
+  background-color: #1f1f1f; /* Тёмный фон */
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.comment {
+  background-color: #292929; /* Немного светлее общий фон */
+  border-radius: 5px;
+  padding: 10px 15px;
+  color: #ddd;
+}
+
+.comment-header {
+  font-size: 14px;
+  font-weight: bold;
+  color: #ffa500; /* Оранжевый цвет для заголовков */
+  margin-bottom: 5px;
+}
+
+.comment-body {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #fff; /* Белый текст */
+}
+
+.comment-children {
+  margin-left: 20px; /* Отступ для вложенных комментариев */
+  margin-top: 10px; /* Отступ сверху */
+  border-left: 2px solid #444; /* Полоса для вложенности */
+  padding-left: 10px;
+}

@@ -3,6 +3,7 @@ import Layout from "../pages/Layout";
 import ErrorPage from "../pages/ErrorPage";
 import HomePage from "../pages/HomePage";
 import AuthPage from "../pages/AuthPage";
+import ProtectedRoute from "./protectedRoute";
 
 export const router = createBrowserRouter([
     {
@@ -11,8 +12,12 @@ export const router = createBrowserRouter([
         errorElement: <ErrorPage />,
         children: [
             {
-                index: true,
-                element: <HomePage />,
+              path: '/',
+              element: (
+                <ProtectedRoute>
+                  <HomePage />
+                </ProtectedRoute>
+              ),
             },
             {
                 //path: 'trans',

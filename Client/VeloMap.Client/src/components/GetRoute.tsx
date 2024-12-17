@@ -3,20 +3,20 @@ import '../styles/GetRouteStyles.css'
 import OutRoutes from "./OutRoutes";
 import { RouteAlias } from "../models/models"
 import { RouteService } from "../Services/RouteService";
-
-const UserId = 1;
+import { toast } from "react-toastify";
+import { useUser } from "../hooks/userHooks";
 
 interface ModalProps {
     isOpen: boolean;
     onClose: () => void;
   }
 
-  const getMyRoutes = async (): Promise<RouteAlias[]> => {
+  const getMyRoutes = async (UserId: number): Promise<RouteAlias[]> => {
     try {
       const routes = await RouteService.getMyRoutes(UserId);
       return routes;
     } catch (error) {
-      console.error('Error fetching routes:', error);
+      toast.error('Error fetching routes:' + error);
       return [];
     }
   };
@@ -26,24 +26,23 @@ interface ModalProps {
       const routes = await RouteService.getPublicRoutes();
       return routes;
     } catch (error) {
-      console.error('Error fetching routes:', error);
+      toast.error('Error fetching routes:'+ error);
       return [];
     }
   };
 
-  const getFavoriteRoutes = async (): Promise<RouteAlias[]> => {
+  const getFavoriteRoutes = async (UserId: number): Promise<RouteAlias[]> => {
     try {
       const routes = await RouteService.getFavoriteRoutes(UserId);
       return routes;
     } catch (error) {
-      console.error('Error fetching routes:', error);
+      toast.error('Error fetching routes:' + error);
       return [];
     }
   };
-
-
   
   const GetRoute: React.FC<ModalProps> = ({isOpen, onClose}) => {
+    const user = useUser(); 
     const [myRoutes, setMyRoutes] = useState<RouteAlias[]>([]);
     const [publicRoutes, setPublicRoutes] = useState<RouteAlias[]>([]);
     const [favoriteRoutes, setFavoriteRoutes] = useState<RouteAlias[]>([]);
@@ -67,8 +66,8 @@ interface ModalProps {
     }
 
     useEffect(() => {
-      const fetchMyRoutes = async () => {
-        const routes = await getMyRoutes();
+      const fetchMyRoutes = async (UserId: number) => {
+        const routes = await getMyRoutes(UserId);
         setMyRoutes(routes);
       };
 
@@ -77,17 +76,16 @@ interface ModalProps {
         setPublicRoutes(routes);
       };
 
-      const fetcFavoritehRoutes = async () => {
-        const routes = await getFavoriteRoutes();
+      const fetcFavoritehRoutes = async (UserId: number) => {
+        const routes = await getFavoriteRoutes(UserId);
         setFavoriteRoutes(routes);
       };
     
-      if(isOpen)
+      if(isOpen && user != null)
       {
-        alert('refresh')
-        fetchMyRoutes();
+        fetchMyRoutes(user.id);
         fetchPublicRoutes();
-        fetcFavoritehRoutes();
+        fetcFavoritehRoutes(user.id);
       }
 
     }, [isOpen]);

@@ -8,7 +8,7 @@ namespace VeloMap.Domain.RouteService.Data.Repositories
         Task<List<Route>> GetUserRoutes(int userId);
 
         Task CreateRouteAsync(Route route, CancellationToken token);
-
+        Task SaveChangesAsync();
         Task<int> GetRouteIdAsync(Route route);
     }
 }

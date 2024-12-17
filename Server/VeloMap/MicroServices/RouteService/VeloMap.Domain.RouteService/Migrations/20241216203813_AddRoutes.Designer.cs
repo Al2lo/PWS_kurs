@@ -12,8 +12,8 @@ using VeloMap.Domain.RouteService.Data;
 namespace VeloMap.Domain.RouteService.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20241212141148_addRoutesTables")]
-    partial class addRoutesTables
+    [Migration("20241216203813_AddRoutes")]
+    partial class AddRoutes
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -11,9 +11,9 @@ namespace VeloMap.Application.RouteService.Services.Interfaces
         Task<List<Route>> GetUserRoutesAsync(int userId);
         Task<RouteDto> GetRouteAsync(int id, int userId);
         Task<int> CreateRouteAsync(CreateRouteDto createRoute, CancellationToken token);
-        Task UpdateRouteAsync(CreateRouteDto updateRoute);
+        Task UpdateRouteAsync(UpdateRotueDto updateRoute);
         Task CreateFovoriteRouteAsync(CreateFavoriteRouteDto createFavoriteRouteDto, CancellationToken token);
         Task DeleteFovoriteRouteAsync(CreateFavoriteRouteDto createFavoriteRouteDto);
-
+        Task DeleteRouteAsync(int routeId, int userId);
     }
 }

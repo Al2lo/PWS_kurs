@@ -1,5 +1,5 @@
 import { instance } from "../api/axios.api";
-import { CreateRoute, FavoriteRoute, FullInfoRoute, Route, RouteAlias } from "../models/models";
+import { CreateRoute, FavoriteRoute, FullInfoRoute, UpdateRoute, RouteAlias } from "../models/models";
 
 export const RouteService ={
 
@@ -11,7 +11,7 @@ export const RouteService ={
     },
 
     async updateRoute(
-        routeData: Route
+        routeData: UpdateRoute
     ): Promise<any>{
         const {data} = await instance.put('routes', routeData);
         return data;
@@ -69,6 +69,15 @@ export const RouteService ={
       });      
       return data;
   },
+
+  async deleteRoute( routeId: number): Promise<any>{
+    const {data} = await instance.delete('routes', {
+      params: {
+        routeId: routeId 
+      },
+    });      
+    return data;
+},
 
     
 }

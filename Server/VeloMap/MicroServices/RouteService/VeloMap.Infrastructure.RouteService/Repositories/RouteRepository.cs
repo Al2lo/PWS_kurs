@@ -57,5 +57,10 @@ namespace VeloMap.Infrastructure.RouteService.Repositories
             .Select(x => x.Id)
             .First();
         }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }

@@ -61,6 +61,9 @@ namespace VeloMap.Application.RouteService.Services
 
         public async Task<int> CreateRouteAsync(CreateRouteDto createRoute, CancellationToken token)
         {
+            if (createRoute.Points.Count == 0)
+                throw new Exception("Address can not be empty");
+
             var newRoute = new Route() {
                 Title = createRoute.Title,
                 Description = createRoute.Description,
@@ -79,21 +82,14 @@ namespace VeloMap.Application.RouteService.Services
             return routeId;
         }
 
-        public async Task UpdateRouteAsync(CreateRouteDto updateRoute)
+        public async Task UpdateRouteAsync(UpdateRotueDto updateRoute)
         {
-            var newRoute = new Route()
-            {
-                Title = updateRoute.Title,
-                Description = updateRoute.Description,
-                Distance = updateRoute.Distance,
-                CreateDate = updateRoute.CreateDate,
-                IsPublic = updateRoute.IsPublic,
-                UserId = updateRoute.UserId,
-                Rating = 0,
-                Points = updateRoute.Points.Select(x => new Point() { Latitude = x.Lat.ToString(), Longitude = x.Lon.ToString() }).ToList()
-            };
+            var route = await _routeRepository.GetByIdAsync(updateRoute.Id);
+            route.Description = updateRoute.Description;
+            route.Title = updateRoute.Title;
+            route.IsPublic = updateRoute.IsPublic;
 
-            await _routeRepository.UpdateAsync(newRoute);
+            await _routeRepository.SaveChangesAsync();
         }
 
         public async Task CreateFovoriteRouteAsync(CreateFavoriteRouteDto createFavoriteRouteDto, CancellationToken token)
@@ -116,6 +112,21 @@ namespace VeloMap.Application.RouteService.Services
             };
 
             await _favoriteRouteRepository.DeleteAsync(newFavoriteRoute);
+        }
+
+        public async Task DeleteRouteAsync(int routeId, int userId)
+        {
+            var route = await _routeRepository.GetByIdAsync(routeId);
+
+            if (route == null)
+                throw new Exception("Route can not be null");
+
+            var checkRoute = (await _routeRepository.GetUserRoutes(userId)).Where(route => route.Id == routeId).FirstOrDefault();
+
+            if (checkRoute == default(Route))
+                throw new Exception("Route is not assigned to this user");
+
+            await _routeRepository.DeleteAsync(route);
         }
     }
 }

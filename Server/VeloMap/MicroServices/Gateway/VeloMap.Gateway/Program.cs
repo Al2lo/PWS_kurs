@@ -1,22 +1,14 @@
-using VeloMap.Domain.AuthService.Extensions;
-using VeloMap.Infrastructure.AuthService.Extensions;
-using VeloMap.Application.AuthService.Extensions;
-using VeloMap.Api.AuthService.Middleware;
+using Ocelot.DependencyInjection;
+using Ocelot.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services
-            .AddDomain(builder.Configuration)
-            .AddInfrastructure()
-            .AddApplication(builder.Configuration);
-
 
 builder.Services.AddCors(options =>
 {
@@ -30,6 +22,9 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
+builder.Services.AddOcelot();
+
 var app = builder.Build();
 
 app.UseCors();
@@ -41,13 +36,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseMiddleware<ExceptionHandler>();
-
 app.UseHttpsRedirection();
 
-app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+await app.UseOcelot();
 
 app.Run();
