@@ -15,7 +15,7 @@ interface AuthFormProps {
   const registerUser = async (user: RegisterUser) => {
       await AuthService.registerUser(user)
       .then(()=>{toast.success("Regiter was success")})
-      .catch((error) => {toast.error(error)})
+      .catch((error) => {toast.error(JSON.parse(error.response.data).Message)})
   };
 
 const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, isLogin }) => {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using VeloMap.Application.RouteService.DTOs.CommentDTO;
 using VeloMap.Application.RouteService.DTOs.FavoriteRouteDTO;
 using VeloMap.Application.RouteService.DTOs.RouteDTO;
 using VeloMap.Application.RouteService.Services.Interfaces;
@@ -11,10 +12,12 @@ namespace VeloMap.Api.RouteService.Controllers
     public class RoutesController : ControllerBase
     {
         private readonly IRouteService _routeService;
+        private readonly ICommentService _commentService;
 
-        public RoutesController(IRouteService routeService)
+        public RoutesController(IRouteService routeService, ICommentService commentService)
         {
             _routeService = routeService;
+            _commentService = commentService;
         }
 
         [HttpGet("public")]
@@ -89,6 +92,22 @@ namespace VeloMap.Api.RouteService.Controllers
                 throw new Exception("User not found");
 
             await _routeService.DeleteRouteAsync(routeId, int.Parse(userId));
+
+            return Ok();
+        }
+
+        [HttpGet("{routeId:int}/comments")]
+        public async Task<IActionResult> GetCommentsAsync(int routeId)
+        {
+            var comments = await _commentService.GetCommentsAsync(routeId);
+
+            return Ok(comments);
+        }
+
+        [HttpPost("{routeId:int}/comments")]
+        public async Task<IActionResult> CreateCommentsAsync(int routeId, [FromBody] CreateCommentDto createCommentDto, CancellationToken token)
+        {
+            await _commentService.CreateCommentAsync(routeId, createCommentDto, token);
 
             return Ok();
         }

@@ -1,5 +1,5 @@
 import { instance } from "../api/axios.api";
-import { CreateRoute, FavoriteRoute, FullInfoRoute, UpdateRoute, RouteAlias } from "../models/models";
+import { CreateRoute, FavoriteRoute, FullInfoRoute, UpdateRoute, RouteAlias, Comment, CreateCommentDto } from "../models/models";
 
 export const RouteService ={
 
@@ -79,5 +79,13 @@ export const RouteService ={
     return data;
 },
 
-    
+async getComments(routeId: number): Promise<Comment[]> {
+  const { data } = await instance.get(`routes/${routeId}/comments`,);
+  return data;
+},
+  
+async createComments(routeId: number, comment: CreateCommentDto): Promise<any> {
+  const { data } = await instance.post(`routes/${routeId}/comments`, comment);
+  return data;
+},
 }

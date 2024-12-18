@@ -92,3 +92,17 @@ export interface User{
     role: number;
     id: number;
 }
+
+export interface Comment {
+    id: number;
+    text: string;
+    parentCommentId: number | null;
+    userId: number;
+    childComments: Comment[];
+  }
+  
+export interface CreateCommentDto {
+    text: string;
+    parentCommentId: number | null;
+    userId: number;
+  }

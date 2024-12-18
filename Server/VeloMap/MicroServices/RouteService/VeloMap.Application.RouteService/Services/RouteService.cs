@@ -94,6 +94,11 @@ namespace VeloMap.Application.RouteService.Services
 
         public async Task CreateFovoriteRouteAsync(CreateFavoriteRouteDto createFavoriteRouteDto, CancellationToken token)
         {
+            var favoriteRoute = await _favoriteRouteRepository.GetFavoriteRouteAsync(createFavoriteRouteDto.RouteId, createFavoriteRouteDto.UserId);
+
+            if (favoriteRoute != null)
+                throw new Exception("Route is favorite");
+
             var newFavoriteRoute = new FavoriteRoute()
             {
                 UserId = createFavoriteRouteDto.UserId,

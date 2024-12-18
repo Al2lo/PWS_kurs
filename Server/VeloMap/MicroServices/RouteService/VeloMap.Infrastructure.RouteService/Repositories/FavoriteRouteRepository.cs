@@ -19,5 +19,10 @@ namespace VeloMap.Infrastructure.RouteService.Repositories
             var route = _table.Where(x => x.UserId == entity.UserId && x.RouteId == entity.RouteId).First();
             await base.DeleteAsync(route);
         }
+
+        public async Task<FavoriteRoute?> GetFavoriteRouteAsync(int routeId, int userId)
+        {
+            return await _table.Where(x => x.RouteId == routeId && x.UserId == userId).FirstOrDefaultAsync();
+        }
     }
 }

@@ -29,6 +29,9 @@ namespace VeloMap.Application.AuthService.Services
             if (!PasswordHasherHelper.Verify(loginUserDTO.Password + user.PasswordSalt, user.PasswordHash))
                 throw new Exception("invalid Password!");
 
+            if (user.IsBlocked)
+                throw new Exception("user is blocked by admin");
+
             var accessToken = _tokenService.GenerateAccessToken(user);
             var refreshToken = _tokenService.GenerateRefreshToken();
 
@@ -84,7 +87,7 @@ namespace VeloMap.Application.AuthService.Services
                 throw new Exception();
 
             if (user.IsBlocked)
-                throw new Exception("user is blocke by admin");
+                throw new Exception("user is blocked by admin");
 
             var retUser = new UserDto()
             {
@@ -95,6 +98,16 @@ namespace VeloMap.Application.AuthService.Services
             };
 
             return retUser;
+        }
+
+        public async Task<string> GetUserNameAsync(int userId)
+        {
+            var user = await _userRepository.GetByIdAsync(userId);
+
+            if (user == null)
+                throw new Exception("User not found");
+
+            return user.Name;
         }
     }
 }

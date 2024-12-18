@@ -24,5 +24,12 @@ export const AuthService ={
     async getProfile() : Promise<User | undefined> {
         const {data} = await instance.get<User>('auth/profile')
         if(data) return data
+    },
+
+    async getUserName(userId: number) : Promise<string> {
+        const { data } = await instance.get('auth/login', {
+            params: userId,
+        });
+        return data
     }
 }

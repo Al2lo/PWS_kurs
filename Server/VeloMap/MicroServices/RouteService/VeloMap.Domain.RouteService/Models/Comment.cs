@@ -6,7 +6,6 @@
         public string Text { get; set; }
         public int? ParentCommentId { get; set; } 
         public Comment ParentComment { get; set; }
-
         public int RouteId { get; set; }
         public Route Route { get; set; }
 

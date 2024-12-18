@@ -5,5 +5,6 @@ namespace VeloMap.Domain.RouteService.Data.Repositories
     public interface IFavoriteRouteRepository : IBaseRepository<FavoriteRoute>
     {
         Task<List<FavoriteRoute>> GetByUserIdAsync(int userId);
+        Task<FavoriteRoute?> GetFavoriteRouteAsync(int routeId, int userId);
     }
 }

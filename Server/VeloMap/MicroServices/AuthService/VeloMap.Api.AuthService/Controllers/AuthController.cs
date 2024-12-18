@@ -106,5 +106,13 @@ namespace VeloMap.Api.AuthService.Controllers
 
             return Ok(user);
         }
+
+        [HttpGet()]
+        public async Task<IActionResult> GetUserName([FromQuery] int userId)
+        {         
+            var user = await _authService.GetUserNameAsync(userId);
+
+            return Ok(user);
+        }
     }
 }
