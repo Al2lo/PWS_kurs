@@ -1,0 +1,116 @@
+/* Контейнер событий */
+.event-container {
+  background-color: #121212; /* Темный фон */
+  color: #fff; /* Белый текст */
+  border-radius: 10px;
+  max-width: 100%; /* Увеличенная ширина */
+  height: 100%;
+  margin: 0 auto;
+  margin-top: 20px;
+  position: relative; /* Для кнопок прокрутки */
+  overflow: hidden; /* Скрытие контента за пределами блока */
+}
+
+.filters-container {
+  font-size: 20px; /* Чуть больше текста */
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #ffa500; /* Оранжевый акцент */
+}
+
+.events-block {
+  margin: 0 20px;
+  margin-top: 40px;
+  display: flex;
+  width: 100%;
+  flex-wrap: nowrap; /* Карточки располагаются в строку */
+  gap: 30px; /* Расстояние между карточками */
+  scroll-behavior: smooth; /* Плавная прокрутка */
+  padding-bottom: 10px;
+}
+
+.create-event {
+  margin-top: 20px;
+  padding: 15px 20px;
+  background-color: #ffa500; /* Оранжевая кнопка */
+  border: none;
+  color: #121212; /* Темный текст */
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.create-event:hover {
+  background-color: #ff8c00; /* Более яркий оранжевый при наведении */
+}
+
+.buttons-scroll-container
+{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  position: relative;
+  margin: 40px;
+}
+
+/* Кнопки для прокрутки */
+.scroll-button {
+  transform: translateY(-50%);
+  background-color: rgba(56, 56, 56, 0.5); /* Полупрозрачный фон */
+  color: #ffa500; /* Оранжевый текст */
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 20px;
+  z-index: 1;
+  transition: background-color 0.3s ease;
+}
+
+.scroll-button:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.scroll-left {
+  left: 10px;
+}
+
+.scroll-right {
+  right: 10px;
+}
+
+/* Карточка события */
+.event-card {
+  background-color: #1e1e1e; /* Темный фон карточки */
+  border: 1px solid #ffa500; /* Оранжевая рамка */
+  border-radius: 10px;
+  padding: 20px; /* Увеличенный внутренний отступ */
+  width: 500px; /* Более широкие карточки */
+  height: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex-shrink: 0; /* Предотвращает сжатие карточек */
+}
+
+.event-card:hover {
+  transform: scale(1.01); /* Приподнимается при наведении */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* Глубокая тень */
+}
+
+.event-card h3 {
+  margin: 0 0 10px 0;
+  color: #ffa500; /* Заголовок оранжевого цвета */
+  font-size: 22px; /* Более крупный заголовок */
+}
+
+.event-card p {
+  margin: 5px 0;
+  color: #ddd; /* Слегка светлее текст */
+  font-size: 20px; /* Более крупный текст */
+}
+
+.event-card strong {
+  color: #ffa500; /* Акцент на важной информации */
+}

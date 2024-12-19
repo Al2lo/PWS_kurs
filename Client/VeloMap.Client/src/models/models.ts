@@ -106,3 +106,14 @@ export interface CreateCommentDto {
     parentCommentId: number | null;
     userId: number;
   }
+
+  export interface Event {
+    id: number;
+    title: string;
+    description: string;
+    location: string;
+    startTime: string;
+    ownerId: number;
+    capacity: number;
+    isAccepted: boolean;
+  }

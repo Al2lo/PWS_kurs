@@ -10,7 +10,7 @@ import GetRoute from "../components/GetRoute";
 import { useRoute, useRouteLike } from "../hooks/routeHooks";
 import { RouteService } from "../Services/RouteService";
 import { useAppDispathc } from "../store/hooks";
-import { updateRoute } from "../store/route/routeSlice";
+import { updateIsLike, updateRoute } from "../store/route/routeSlice";
 import { toast } from "react-toastify";
 import { useUser } from "../hooks/userHooks";
 
@@ -24,8 +24,7 @@ const HomePage: FC = () => {
     const [isModalGetRouteOpen, setIsModalGetRouteOpen] = useState(false);
     const [inputRoutes, setInputRoutes] = useState<RouteTitle[]>([{id: "1", text: ""}, {id: "2", text: ""}]);
     const inputRoutesLoc = useRef<Point[]>([
-        { Lat: 53.906, Lon: 27.5308 },
-        { Lat: 53.706, Lon: 27.1308 },
+
       ]);
     const idInputRouteRef = useRef("");
     const [isGetLocation, setIsGetLocation] = useState<boolean>(false);
@@ -59,13 +58,13 @@ const HomePage: FC = () => {
             if(isLiked)
             {
                 RouteService.deleteFavoriteRoute(favoriteRoute)
-                .then(()=>{setIsLiked(!isLiked);})
+                .then(()=>{dispatch(updateIsLike(!isLiked));})
                 .catch(()=>toast.error('error'));
             }
             else
             {
                 RouteService.createFavoriteRoute(favoriteRoute)
-                .then(()=>{setIsLiked(!isLiked);})
+                .then(()=>{dispatch(updateIsLike(!isLiked));})
                 .catch(()=>toast.error('error'));
             }
         }
@@ -92,7 +91,7 @@ const HomePage: FC = () => {
           Description: descriptionRoute,
           Distance: '17',
           CreateDate: new Date(),
-          IsPublic: true,
+          IsPublic: false,
           UserId: user.id,
           Points: inputRoutesLoc.current,
         };
@@ -106,7 +105,7 @@ const HomePage: FC = () => {
         Description: descriptionRoute,
         Distance: '17',
         CreateDate: new Date(),
-        IsPublic: true,
+        IsPublic: false,
         UserId: user.id,
         Points: inputRoutesLoc.current,
       }));

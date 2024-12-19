@@ -20,13 +20,16 @@ export const routeSlice = createSlice({
     updateRoute: (state, action: PayloadAction<Route>) => {
         state.route = action.payload;
     },
+    deleteCurrentRoute: (state) => {
+      state.route = null;
+    },
     updateIsLike:(state, action: PayloadAction<boolean>) => {
       state.isLike = action.payload;
     }
   }
 })
 
-export const { updateRoute, updateIsLike } = routeSlice.actions
+export const { updateRoute, updateIsLike, deleteCurrentRoute } = routeSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectCount = (state: RootState) => state.route

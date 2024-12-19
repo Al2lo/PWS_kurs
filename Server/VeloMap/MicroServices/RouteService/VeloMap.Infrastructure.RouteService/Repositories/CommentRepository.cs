@@ -13,10 +13,10 @@ namespace VeloMap.Infrastructure.RouteService.Repositories
         {
             var comments = await _table
                 .Include(x => x.ChildComments)
-                .Where(x => x.ParentCommentId == null && x.RouteId == routeId)
+                .Where(x => x.RouteId == routeId)
                 .ToListAsync();
 
-            return comments;
+            return comments.Where(x => x.ParentCommentId == null).ToList();
             
         }
     }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Comment } from "../models/models";
 import { AuthService } from '../Services/AuthService';
+import { toast } from 'react-toastify';
 
 interface CommentProps {
   comment: {
@@ -34,29 +35,19 @@ const CommentComponent: React.FC<CommentProps> = ({ comment, onAddChildComment }
     }
   };
 
+useEffect(()=>{
   const getUserName = async (userId: number) => {
     try{
       var userName = await AuthService.getUserName(userId);
-      return userName;
+      setUserName(userName)
     }
     catch(e){
-      return "user not found"
+      toast.error("user not found");
+      console.log(e)
     }
   }
-
-  useEffect(() => {
-    const fetchUserName = async () => {
-        try {
-            const name = await AuthService.getUserName(comment.userId);
-            setUserName(name);
-        } catch (e) {
-            setUserName('user not found');
-        }
-    };
-
-    fetchUserName();
-}, [comment.userId]);
-
+  getUserName(comment.userId);
+  },[])
 
   return (
     <div className="comment">

@@ -1,7 +1,7 @@
-using VeloMap.Domain.AuthService.Extensions;
-using VeloMap.Infrastructure.AuthService.Extensions;
-using VeloMap.Application.AuthService.Extensions;
-using VeloMap.Api.AuthService.Middleware;
+using VeloMap.Domain.EventService.Extensions;
+using VeloMap.Infrastructure.EventService.Extensions;
+using VeloMap.Application.EventService.Extensions;
+using VeloMap.Api.EventService.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,15 +17,14 @@ builder.Services
             .AddInfrastructure()
             .AddApplication(builder.Configuration);
 
-
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy.WithOrigins("http://localhost:5173") 
+        policy.WithOrigins("http://localhost:5173")
               .AllowAnyHeader()
               .AllowAnyMethod()
-              .AllowCredentials(); 
+              .AllowCredentials();
     });
 });
 
@@ -44,7 +43,6 @@ app.UseMiddleware<ExceptionHandler>();
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

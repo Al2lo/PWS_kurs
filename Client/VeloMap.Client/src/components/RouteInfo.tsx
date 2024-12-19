@@ -3,11 +3,12 @@ import { CreateCommentDto, FullInfoRoute, Point } from "../models/models";
 import '../styles/RouteInfoStyles.css'
 import { RouteService } from "../Services/RouteService";
 import { useDispatch } from "react-redux";
-import { updateIsLike, updateRoute } from "../store/route/routeSlice";
+import { deleteCurrentRoute, updateIsLike, updateRoute } from "../store/route/routeSlice";
 import { toast } from "react-toastify";
 import { useUser } from "../hooks/userHooks";
 import { Comment } from "../models/models";
 import CommentComponent from "./CommentComponent";
+import { useRoute } from "../hooks/routeHooks";
 
 interface ModalProps {
     routeId: number | null;
@@ -58,6 +59,7 @@ const deleteRouteAsync = async (routeId: number): Promise<any> => {
 
 const RouteInfo: React.FC<ModalProps> = ({routeId, isOpen, onClose, closeOutRoutesWindow }) => {
     const dispatch = useDispatch();
+    const route = useRoute();
     const user = useUser();
     const [routeInfo, setRouteInfo] = useState<FullInfoRoute | null>(null);
     const [comments, setComments] = useState<Comment[]>([]);
@@ -93,7 +95,14 @@ const RouteInfo: React.FC<ModalProps> = ({routeId, isOpen, onClose, closeOutRout
 
     const deleteRoute =() => {
         if(routeInfo != null)
-            deleteRouteAsync(routeInfo?.id);
+            deleteRouteAsync(routeInfo?.id)
+        .then(()=>{
+            if(routeInfo?.id == route?.Id)
+            {
+                dispatch(deleteCurrentRoute());
+                dispatch(updateIsLike(false));
+            }
+        })
 
         closeOutRoutesWindow();
         onClose();
@@ -142,10 +151,15 @@ const RouteInfo: React.FC<ModalProps> = ({routeId, isOpen, onClose, closeOutRout
                     {text: text,
                     parentCommentId: parentCommentId,
                     userId: user.id
+                }).then( () => {
+                    fetchRouteCommentsAsync(routeInfo.id)
+                    .then(()=>{
+                        return comments;
+                    })
                 })
               }
-
-                return addCommentRecursively(prevComments);
+              // НАДО ДОСМОТРЕТЬ!
+              return addCommentRecursively(prevComments);
             });
           };
 
