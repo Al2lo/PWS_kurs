@@ -114,6 +114,7 @@ export interface CreateCommentDto {
     location: string;
     startTime: string;
     ownerId: number;
-    capacity: number;
-    isAccepted: boolean;
+    capasity: number;
+    count: number;
+    participant: boolean
   }

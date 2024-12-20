@@ -1,0 +1,90 @@
+/* Основные стили контейнера */
+.create-event-container {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #121212; /* Тёмный фон */
+    color: #ffffff; /* Белый текст */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Кнопка создания события */
+.create-event-button {
+    padding: 15px 30px;
+    font-size: 18px;
+    color: #ffffff;
+    background-color: #ff7300; /* Оранжевый акцент */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Тень */
+    transition: all 0.3s ease;
+}
+
+.create-event-button:hover {
+    background-color: #a44200; /* Более насыщенный оранжевый */
+}
+
+.create-event-button.moved-down {
+    margin-top: 20px; /* Сдвиг кнопки вниз */
+}
+
+/* Форма создания события */
+.event-form {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #1e1e1e; /* Тёмный фон для формы */
+    border-radius: 12px;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5); /* Тень */
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Группы полей */
+.form-group label {
+    font-size: 14px;
+    color: #ff7300; /* Оранжевый акцент */
+    margin-bottom: 5px;
+    display: block;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #444; /* Тёмно-серый бордер */
+    border-radius: 8px;
+    background-color: #2a2a2a; /* Тёмно-серый фон */
+    color: #fff; /* Белый текст */
+    font-size: 16px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #ff7300; /* Оранжевая рамка при фокусе */
+    box-shadow: 0 0 5px rgba(255, 102, 0, 0.7); /* Тень оранжевого цвета */
+}
+
+/* Кнопка отправки формы */
+.submit-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #ff7300; /* Оранжевый акцент */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Тень */
+    transition: all 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #e55b00; /* Более насыщенный оранжевый */
+}

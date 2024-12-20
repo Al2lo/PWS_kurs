@@ -1,30 +1,31 @@
-/* Контейнер событий */
 .event-container {
   background-color: #121212; /* Темный фон */
   color: #fff; /* Белый текст */
   border-radius: 10px;
-  max-width: 100%; /* Увеличенная ширина */
-  height: 100%;
-  margin: 0 auto;
-  margin-top: 20px;
+  min-height: 88vh;
+  width: 100%; /* Увеличенная ширина */
   position: relative; /* Для кнопок прокрутки */
   overflow: hidden; /* Скрытие контента за пределами блока */
+  padding: 20px; /* Внутренние отступы */
 }
 
 .filters-container {
+  margin-top: 20px;
   font-size: 20px; /* Чуть больше текста */
   font-weight: bold;
   margin-bottom: 20px;
   color: #ffa500; /* Оранжевый акцент */
 }
-
 .events-block {
-  margin: 0 20px;
+  margin: 20px 20px;
   margin-top: 40px;
   display: flex;
+  justify-content: center; /* Выравнивание карточек по центру */
+  gap: 20px; /* Отступы между карточками */
   width: 100%;
+  position: relative;
   flex-wrap: nowrap; /* Карточки располагаются в строку */
-  gap: 30px; /* Расстояние между карточками */
+  overflow-x: auto; /* Горизонтальная прокрутка, если не помещаются */
   scroll-behavior: smooth; /* Плавная прокрутка */
   padding-bottom: 10px;
 }
@@ -83,15 +84,30 @@
 
 /* Карточка события */
 .event-card {
+  margin-top: 10px;
   background-color: #1e1e1e; /* Темный фон карточки */
   border: 1px solid #ffa500; /* Оранжевая рамка */
   border-radius: 10px;
   padding: 20px; /* Увеличенный внутренний отступ */
-  width: 500px; /* Более широкие карточки */
-  height: 400px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  width: 500px; /* Фиксированная ширина карточки */
+  height: 400px; /* Фиксированная высота карточки */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Тень */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   flex-shrink: 0; /* Предотвращает сжатие карточек */
+  overflow: hidden; /* Скрытие переполнения */
+  display: flex;
+  flex-direction: column; /* Размещение контента в колонку */
+}
+
+.event-card p {
+  word-wrap: break-word; /* Перенос слов */
+  overflow: hidden; /* Скрытие переполненного текста */
+  text-overflow: ellipsis; /* Многоточие, если текст обрезается */
+  display: -webkit-box; /* Для ограничения строк */
+  -webkit-line-clamp: 4; /* Показывает максимум 4 строки */
+  -webkit-box-orient: vertical; /* Ориентация текста для line-clamp */
+  line-height: 1.5; /* Межстрочный интервал */
+  max-height: calc(1.5em * 4); /* Учитывает высоту 4 строк */
 }
 
 .event-card:hover {
@@ -113,4 +129,53 @@
 
 .event-card strong {
   color: #ffa500; /* Акцент на важной информации */
+}
+
+.event-buttons-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: auto; /* Автоматический отступ сверху, чтобы сдвинуть блок вниз */
+  padding: 10px 20px; /* Внутренние отступы для кнопок */
+}
+
+
+.status-text {
+  font-size: 16px; /* Размер текста */
+  color: #121212; /* Оранжевый текст */
+  margin: 0; /* Убираем отступы */
+  align-self: center; /* Выравнивание по центру в контейнере */
+  font-weight: bold; /* Жирный шрифт */
+}
+
+/* Кнопка регистрации */
+.button-register {
+  background-color: #ffa500; /* Оранжевый фон */
+  color: #121212; /* Темный текст */
+  font-size: 16px; /* Размер текста */
+  padding: 10px 20px; /* Внутренние отступы */
+  border: none; /* Без границ */
+  border-radius: 8px; /* Скругленные углы */
+  cursor: pointer; /* Указатель при наведении */
+  font-weight: bold; /* Жирный шрифт */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Плавные переходы */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень */
+}
+
+.button-register:hover {
+  background-color: #ff8c00; /* Более темный оранжевый при наведении */
+  transform: scale(1.05); /* Увеличение при наведении */
+}
+
+.button-register:active {
+  background-color: #ff7518; /* Цвет при нажатии */
+  transform: scale(0.95); /* Легкое уменьшение при клике */
+}
+
+.button-register:disabled {
+  background-color: #555; /* Серый фон для неактивной кнопки */
+  color: #aaa; /* Светло-серый текст */
+  cursor: not-allowed; /* Указатель для неактивной кнопки */
+  box-shadow: none; /* Убираем тень */
 }
