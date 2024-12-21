@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { Event } from "../../models/models";
 import EventComponent from "../../components/Event";
 import "../../styles/Event.css"
@@ -9,6 +9,11 @@ import { toast } from "react-toastify";
 const EventPage: FC = () => {
     const [page, setPage] = useState<number>(0); 
     const [events, setEvents] = useState<Event[]>([]);
+    const [updateEventRef, setUpdateEventRef] = useState<boolean>(false);
+
+    const handleUpdateEvents = () => {
+        setUpdateEventRef(!updateEventRef);
+    };
 
     useEffect( () => {
         const fetchEvents = async () => {
@@ -23,7 +28,7 @@ const EventPage: FC = () => {
         }
 
         fetchEvents();
-    }, [])
+    }, [updateEventRef])
 
     return (
         <div className="event-container">
@@ -31,7 +36,7 @@ const EventPage: FC = () => {
 
             <div className="events-block">
                 {events.slice(page * 3, 3 * page + 3).map((event) => (
-                    <EventComponent event={event} />
+                    <EventComponent event={event} updateEvents={handleUpdateEvents} />
                 ))}
             </div>
 
@@ -52,7 +57,7 @@ const EventPage: FC = () => {
                 </button>
             </div>
             
-           <CreateEvent></CreateEvent>
+           <CreateEvent updateEvents={handleUpdateEvents}></CreateEvent>
         </div>
     );
 };

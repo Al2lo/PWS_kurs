@@ -118,3 +118,30 @@ export interface CreateCommentDto {
     count: number;
     participant: boolean
   }
+
+  export interface UserEvent {
+    id: number;
+    title: string;
+    description: string;
+    location: string;
+    startTime: string;
+    ownerId: number;
+    capasity: number;
+    count: number;
+    participant: boolean;
+    isAccepted: boolean;
+  }
+
+  export interface CreateEvent{
+    Title: string;
+    Description: string;
+    Location: string;
+    StartTime: Date;
+    Capasity: number;
+  }
+
+  export interface UpdateUserDto
+  {
+    Name: string;
+    Email: string;
+  }

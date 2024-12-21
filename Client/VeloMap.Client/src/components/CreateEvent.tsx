@@ -1,5 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import "../styles/CreateEvent.css"
+import { EventService } from "../Services/EventService";
+import { toast } from "react-toastify";
 
 interface EventData {
     id: string;
@@ -12,7 +14,11 @@ interface EventData {
     isAccepted: boolean;
 }
 
-const CreateEventButton: React.FC = () => {
+interface ModalProps {
+    updateEvents: () => void;
+}
+
+const CreateEventButton: React.FC<ModalProps> = ({updateEvents}) => {
     const [isFormVisible, setFormVisible] = useState<boolean>(false);
     const [eventData, setEventData] = useState<EventData>({
         id: "",
@@ -24,6 +30,7 @@ const CreateEventButton: React.FC = () => {
         capacity: "",
         isAccepted: false,
     });
+
 
     const toggleForm = () => {
         setFormVisible(!isFormVisible);
@@ -53,18 +60,51 @@ const CreateEventButton: React.FC = () => {
         setFormVisible(false);
     };
 
+    const CreateEvent = () => {
+        const createEventAsync = async () => {
+            
+            if(eventData.title.trim().length === 0 ||
+             eventData.description.trim().length === 0 || 
+             eventData.location.trim().length === 0 ||
+             eventData.startTime == null ||
+             isNaN(Number(eventData.capacity)) ||
+             Number(eventData.capacity) == 0)
+                return
+
+            let createEventDto = {
+                Title: eventData.title,
+                Description: eventData.description,
+                Location: eventData.location,
+                StartTime: new Date(eventData.startTime),
+                Capasity: Number(eventData.capacity)
+            }
+
+            await EventService.CreateEvent(createEventDto)
+            .then(()=>{
+                toggleForm();
+                updateEvents();
+                toast.success("Youre request has been sent");
+            })
+            .catch(() => {
+                toast.error("Error when you create event")
+            })
+        }
+       
+        createEventAsync();
+    }
+
     return (
         <div className="create-event-container">
             <button
                 className={`create-event-button ${isFormVisible ? "moved-down" : ""}`}
                 onClick={toggleForm}
             >
-                {isFormVisible ? "Оставить заявку" : "Создать событие"}
+                {isFormVisible ? "Hidden" : "Create Event"}
             </button>
             {isFormVisible && (
                 <form className="event-form" onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label>Название события:</label>
+                        <label className="event-form-label">Title:</label>
                         <input
                             type="text"
                             name="title"
@@ -74,16 +114,17 @@ const CreateEventButton: React.FC = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <label>Описание:</label>
+                        <label>Description:</label>
                         <textarea
                             name="description"
                             value={eventData.description}
                             onChange={handleInputChange}
                             required
+                            rows={6}
                         ></textarea>
                     </div>
                     <div className="form-group">
-                        <label>Локация:</label>
+                        <label>Location:</label>
                         <input
                             type="text"
                             name="location"
@@ -93,7 +134,7 @@ const CreateEventButton: React.FC = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <label>Время начала:</label>
+                        <label>Date start:</label>
                         <input
                             type="datetime-local"
                             name="startTime"
@@ -103,7 +144,7 @@ const CreateEventButton: React.FC = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <label>Количество мест:</label>
+                        <label>Capacity:</label>
                         <input
                             type="number"
                             name="capacity"
@@ -113,8 +154,8 @@ const CreateEventButton: React.FC = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <button type="submit" className="submit-button">
-                            Отправить
+                        <button type="submit" className="submit-button" onClick={() => CreateEvent()}>
+                            Send
                         </button>
                     </div>
                 </form>

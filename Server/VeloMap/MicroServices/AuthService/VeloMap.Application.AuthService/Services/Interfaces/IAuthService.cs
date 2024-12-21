@@ -8,6 +8,5 @@ namespace VeloMap.Application.AuthService.Services.Interfaces
         Task RegisterAsync(CreateUserDto createUser, CancellationToken cancellationToken);
         Task<bool> LogOutAsync(CancellationToken cancellationToken);
         Task<UserDto> ReloginAsync(int userId);
-        Task<string> GetUserNameAsync(int userId);
     }
 }

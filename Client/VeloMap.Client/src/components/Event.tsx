@@ -2,19 +2,23 @@ import React, { useEffect, useState } from "react";
 import {Event} from '../models/models'
 import { EventService } from "../Services/EventService";
 import { toast } from "react-toastify";
+import { UserService } from "../Services/UserService";
 
 interface EventBlockProps {
   event: Event;
+  updateEvents: () => void;
 }
 
-const EventComponent: React.FC<EventBlockProps> = ({ event }) => {
+const EventComponent: React.FC<EventBlockProps> = ({ event, updateEvents }) => {
   const [isRegiser, setIsRegister] = useState<boolean>(event.participant);
   const [freePlace, setFreePlace] = useState<boolean>(false);
+  const [ownerName, setOwnerName] = useState<string>("");
 
   const unregister = () => {
     EventService.CheckOutUser(event.id)
     .then(() => {
       setIsRegister(false);
+      updateEvents();
       toast.success("You success check out of" + event.title);
     })
     .catch((e) => {
@@ -26,6 +30,7 @@ const EventComponent: React.FC<EventBlockProps> = ({ event }) => {
     EventService.RegisterUser(event.id)
     .then(() => {
       setIsRegister(true);
+      updateEvents();
       toast.success("You success register on" + event.title);
     })
     .catch((e) => {
@@ -40,7 +45,23 @@ const EventComponent: React.FC<EventBlockProps> = ({ event }) => {
       setFreePlace(true);
     else if(event.count < event.capasity)
       setFreePlace(true);
-  }, [isRegiser])
+  }, [event])
+
+
+  useEffect(() => {
+    const getUserName = async (userId: number) => {
+      try{
+        var userName = await UserService.getUserName(userId);
+        setOwnerName(userName)
+      }
+      catch(e){
+        toast.error("user not found");
+        console.log(e)
+      }
+    }
+    
+    getUserName(event.ownerId);
+  }, [])
 
   return (
     <div key={event.id} className="event-card">
@@ -50,13 +71,16 @@ const EventComponent: React.FC<EventBlockProps> = ({ event }) => {
           <strong>Location:</strong> {event.location}
         </p>
         <p>
-          <strong>Starts at:</strong> {new Date(event.startTime).toLocaleString()}
+          <strong>Owner name:</strong> {ownerName}
         </p>
         <p>
-          <strong>capasity:</strong> {event.count}/{event.capasity}
+          <strong>Start at:</strong> {new Date(event.startTime).toLocaleString()}
+        </p>
+        <p>
+          <strong>Capacity:</strong> {event.count}/{event.capasity}
         </p>
         <div className="event-buttons-container">
-          <p className="status-text"><strong>{!isRegiser ? 'UNREGISTER': 'REGISTER'}</strong></p>
+          <p className="status-text">STATUS: <strong>{!isRegiser ? 'Unregister': 'Register'}</strong></p>
           {freePlace 
           ? <button className="button-register"
               onClick={isRegiser ? () =>{unregister()} : () => {register()}}>{isRegiser ? 'Unregister': 'Register'}

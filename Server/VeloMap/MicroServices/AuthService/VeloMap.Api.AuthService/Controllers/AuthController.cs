@@ -51,7 +51,7 @@ namespace VeloMap.Api.AuthService.Controllers
             return Ok(new { Name = tokens[2], Email = tokens[3], Role = int.Parse(tokens[4]), Id = int.Parse(tokens[5]) });
         }
 
-        [HttpPost("users")]
+        [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] CreateUserDto createUserDTO, CancellationToken cancellationToken)
         {
             var validationResult = _createUserDTOValidator.Validate(createUserDTO);
@@ -103,14 +103,6 @@ namespace VeloMap.Api.AuthService.Controllers
             }
 
             var user = await _authService.ReloginAsync(userId);
-
-            return Ok(user);
-        }
-
-        [HttpGet()]
-        public async Task<IActionResult> GetUserName([FromQuery] int userId)
-        {         
-            var user = await _authService.GetUserNameAsync(userId);
 
             return Ok(user);
         }

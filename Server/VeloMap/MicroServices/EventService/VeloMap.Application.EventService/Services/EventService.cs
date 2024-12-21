@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System.ComponentModel;
 using VeloMap.Application.EventService.DTOs.EventDTO;
 using VeloMap.Application.EventService.Services.Interfaces;
 using VeloMap.Domain.EventService.Data.Repositories;
@@ -18,15 +20,15 @@ namespace VeloMap.Application.EventService.Services
             _eventUserRepository = eventUserRepository;
         }
 
-        public async Task<List<EventDto>> GetOpenedEventsAsync(int userId)
+        public async Task<List<OpenedEventDto>> GetOpenedEventsAsync(int userId)
         {
             var events = await _eventRepository.GetOpenedeEventsAsync();
-            var outputEvents = new List<EventDto>();
+            var outputEvents = new List<OpenedEventDto>();
 
             foreach (var item in events)
             {
                 var participant = await GetUserHasEvent(userId, item.Id);
-                outputEvents.Add(new EventDto
+                outputEvents.Add(new OpenedEventDto
                 {
                     Id = item.Id,
                     Title = item.Title,
@@ -69,6 +71,48 @@ namespace VeloMap.Application.EventService.Services
             var userEvent = await _eventUserRepository.GetUserEventAsync(userId, eventId);
             
             return userEvent != null;
+        }
+
+        public async Task CreateEventAsync(int userId, CreateEventDto createEventDto, CancellationToken token)
+        {
+            var newEvent = new Event()
+            {
+                Title = createEventDto.Title,
+                Description = createEventDto.Description,
+                Location = createEventDto.Location,
+                StartTime = createEventDto.StartTime,
+                OwnerId = userId,
+                Capasity = createEventDto.Capasity,
+                IsAccepted = false
+            };
+
+            await _eventRepository.AddAsync(newEvent, token);
+        }
+
+        public async Task<List<EventDto>> GetEvetnsByUserAsync(int userId)
+        {
+            var events = await _eventRepository.GetByUserIdAsync(userId);
+            var outputEvents = new List<EventDto>();
+
+            foreach (var item in events)
+            {
+                var participant = await GetUserHasEvent(userId, item.Id);
+                outputEvents.Add(new EventDto
+                {
+                    Id = item.Id,
+                    Title = item.Title,
+                    Description = item.Description,
+                    Location = item.Location,
+                    StartTime = item.StartTime,
+                    OwnerId = item.OwnerId,
+                    Capasity = item.Capasity,
+                    Count = item.EventUsers.Count,
+                    Participant = participant,
+                    IsAccepted = item.IsAccepted,
+                });
+            }
+
+            return outputEvents;
         }
     }
 }

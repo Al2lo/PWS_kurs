@@ -93,7 +93,6 @@
   height: 400px; /* Фиксированная высота карточки */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Тень */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  flex-shrink: 0; /* Предотвращает сжатие карточек */
   overflow: hidden; /* Скрытие переполнения */
   display: flex;
   flex-direction: column; /* Размещение контента в колонку */

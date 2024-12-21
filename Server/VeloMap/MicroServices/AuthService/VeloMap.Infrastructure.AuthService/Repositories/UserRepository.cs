@@ -9,16 +9,18 @@ namespace VeloMap.Infrastructure.AuthService.Repositories
     {
         public UserRepository(ApplicationContext context) : base(context) { }
 
-        public async Task<User> GetByEmailAsync(string email, CancellationToken cancellationToken)
+        public async Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken)
         {
             var user = await _table
                  .Include(u => u.RefreshToken)
                 .FirstOrDefaultAsync(x => x.Email == email, cancellationToken);
 
-            if (user == null)
-                throw new Exception("invalid email!");
-
             return user;
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }

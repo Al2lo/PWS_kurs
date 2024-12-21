@@ -1,5 +1,5 @@
 import { instance } from "../api/axios.api";
-import { Event} from "../models/models";
+import { CreateEvent, Event, UserEvent} from "../models/models";
 
 export const EventService ={
 
@@ -36,9 +36,15 @@ export const EventService ={
         return data;
     },
 
-  async CreateEvent(event : Event): Promise<any>{
+  async CreateEvent(event : CreateEvent): Promise<any>{
     const {data} = await instance.post('events', event);      
     return data;
 },
+
+async GetUserEvents(): Promise<UserEvent[]>{
+    const {data} = await instance.get('events/user');      
+    return data;
+},
+
 
 }

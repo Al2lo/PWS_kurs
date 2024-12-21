@@ -1,0 +1,117 @@
+.profile-page{
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #121212; /* Темный фон */
+    color: #ffffff; /* Белый текст */
+    display: flex;
+    width: 100%;
+}
+
+.profile-page__sidebar,
+.profile-page__main,
+.profile-page__profile-info {
+    padding: 20px;
+    background-color: #1e1e1e; /* Темный фон для колонок */
+    border-radius: 8px;
+    margin: 0 10px;
+    flex: 1; 
+}
+
+.profile-page__sidebar {
+    flex: 2; /* Левая часть будет шире */
+}
+
+.profile-page__main {
+    flex: 3; /* Центральная часть будет немного шире */
+}
+
+.profile-page__profile-info {
+    flex: 1; /* Правая часть */
+}
+
+.profile-page__section-title {
+    font-size: 20px;
+    color: #ffa500; /* Оранжевый акцент */
+    margin-bottom: 10px;
+}
+
+.profile-page__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.profile-page__list-item {
+    text-align: left; /* Убедитесь, что текст выровнен по левому краю */
+    padding: 10px;
+    background-color: #333333;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    color:#ffb733;
+    margin-bottom: 20px;
+}
+
+.profile-page__list-item-title
+{
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.profile-page__list-item-description
+{
+    font-size: 18px;
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.profile-info-span{
+    color: #121212;
+}
+
+.profile-page__field {
+    margin-bottom: 15px;
+}
+
+.profile-page__label {
+    font-size: 20px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.profile-page__input {
+    background: #616161;
+    color: black;
+    border: 1px solid #616161;
+    padding: 10px;
+    border-radius: 5px;
+    width: 70%;
+    margin-right: 10px;
+    margin-bottom: 30px;
+    font-size: 18px;
+}
+
+.profile-page__value {
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.profile-page__button {
+    background-color: #ffa500;
+    color: #121212;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.profile-page__button:hover {
+    background-color: #ffb733; /* Светлее оранжевый */
+}
+
+.update-profile-container{
+    margin-top: 60px;
+}

@@ -1,8 +1,6 @@
-﻿using VeloMap.Domain.EventService.Models;
-
-namespace VeloMap.Application.EventService.DTOs.EventDTO
+﻿namespace VeloMap.Application.EventService.DTOs.EventDTO
 {
-    public class EventDto
+    public class OpenedEventDto
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -13,6 +11,5 @@ namespace VeloMap.Application.EventService.DTOs.EventDTO
         public int Capasity { get; set; }
         public int Count { get; set; }
         public bool Participant { get; set; }
-        public bool IsAccepted { get; set; }
     }
 }

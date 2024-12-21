@@ -19,11 +19,14 @@ namespace VeloMap.Application.AuthService.Extensions;
             var jwtOptions = configuration.GetSection(nameof(JwtOption)).Get<JwtOption>();
 
             services.Configure<JwtOption>(configuration.GetSection("JwtOption"));
-            services.AddScoped<ITokenService, TokenService>();
-            services.AddScoped<IAuthService, Services.AuthService>();
+            services
+                .AddScoped<ITokenService, TokenService>()
+                .AddScoped<IAuthService, Services.AuthService>()
+                .AddScoped<IUserService, Services.UserService>();
 
             services.AddTransient<IValidator<LoginUserDto>, LoginUserDtoValidator>();
             services.AddTransient<IValidator<CreateUserDto>, CreateUserDtoValidator>();
+            services.AddTransient<IValidator<UpdateUserDto>, UpdateUserValidator>();
 
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

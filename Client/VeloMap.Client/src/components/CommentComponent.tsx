@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Comment } from "../models/models";
-import { AuthService } from '../Services/AuthService';
 import { toast } from 'react-toastify';
+import { UserService } from '../Services/UserService';
 
 interface CommentProps {
   comment: {
@@ -38,7 +38,7 @@ const CommentComponent: React.FC<CommentProps> = ({ comment, onAddChildComment }
 useEffect(()=>{
   const getUserName = async (userId: number) => {
     try{
-      var userName = await AuthService.getUserName(userId);
+      var userName = await UserService.getUserName(userId);
       setUserName(userName)
     }
     catch(e){
@@ -46,6 +46,7 @@ useEffect(()=>{
       console.log(e)
     }
   }
+  
   getUserName(comment.userId);
   },[])
 

@@ -5,6 +5,7 @@ import HomePage from "../pages/HomePage";
 import AuthPage from "../pages/AuthPage";
 import ProtectedRoute from "./protectedRoute";
 import EventPage from "../pages/userPages/EventPage";
+import ProfilePage from "../pages/userPages/ProfilePage";
 
 export const router = createBrowserRouter([
     {
@@ -23,6 +24,10 @@ export const router = createBrowserRouter([
             {
                 path: 'events',
                 element: <EventPage/>
+            },
+            {
+              path: 'profile',
+              element: <ProfilePage/>
             },
             {
                 path: 'auth',

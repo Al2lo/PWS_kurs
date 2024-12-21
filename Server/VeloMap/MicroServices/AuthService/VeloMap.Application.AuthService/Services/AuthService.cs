@@ -99,15 +99,5 @@ namespace VeloMap.Application.AuthService.Services
 
             return retUser;
         }
-
-        public async Task<string> GetUserNameAsync(int userId)
-        {
-            var user = await _userRepository.GetByIdAsync(userId);
-
-            if (user == null)
-                throw new Exception("User not found");
-
-            return user.Name;
-        }
     }
 }

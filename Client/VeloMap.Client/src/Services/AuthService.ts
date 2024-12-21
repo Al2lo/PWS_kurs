@@ -5,7 +5,7 @@ export const AuthService ={
 
     async registerUser(
       registerUser: RegisterUser ): Promise<any>{
-      const {data} = await instance.post('auth/users', registerUser);      
+      const {data} = await instance.post('auth/register', registerUser);      
       return data;
   },
 
@@ -25,12 +25,4 @@ export const AuthService ={
         const {data} = await instance.get<User>('auth/profile')
         if(data) return data
     },
-
-    async getUserName(userId: number) : Promise<string> {
-        const { data } = await instance.get('auth', {
-            params: {userId},
-        });
-        console.log(data)
-        return data
-    }
 }

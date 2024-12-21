@@ -31,13 +31,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeloMap.Gateway", "MicroSer
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EventService", "EventService", "{B798306B-CE63-443C-BC03-07EAA00443CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeloMap.Api.EventService", "MicroServices\EventService\VeloMap.Api.EventService\VeloMap.Api.EventService.csproj", "{7A4FDBD9-1DC5-4023-AB22-2C8B7B456D57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeloMap.Api.EventService", "MicroServices\EventService\VeloMap.Api.EventService\VeloMap.Api.EventService.csproj", "{7A4FDBD9-1DC5-4023-AB22-2C8B7B456D57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeloMap.Domain.EventService", "MicroServices\EventService\VeloMap.Domain.EventService\VeloMap.Domain.EventService.csproj", "{AE680BDA-069C-417C-8028-F2ADA46454CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeloMap.Domain.EventService", "MicroServices\EventService\VeloMap.Domain.EventService\VeloMap.Domain.EventService.csproj", "{AE680BDA-069C-417C-8028-F2ADA46454CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeloMap.Infrastructure.EventService", "MicroServices\EventService\VeloMap.Infrastructure.EventService\VeloMap.Infrastructure.EventService.csproj", "{C6CF816D-5099-42E4-A981-447C65121C76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeloMap.Infrastructure.EventService", "MicroServices\EventService\VeloMap.Infrastructure.EventService\VeloMap.Infrastructure.EventService.csproj", "{C6CF816D-5099-42E4-A981-447C65121C76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeloMap.Application.EventService", "MicroServices\EventService\VeloMap.Application.EventService\VeloMap.Application.EventService.csproj", "{915AF82B-0800-4B26-9DE7-C637940FCE86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeloMap.Application.EventService", "MicroServices\EventService\VeloMap.Application.EventService\VeloMap.Application.EventService.csproj", "{915AF82B-0800-4B26-9DE7-C637940FCE86}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,10 +45,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{36F03087-DAA8-4835-964A-1FD5DD76B350}.Debug|Any CPU.ActiveCfg = Release|Any CPU
-		{36F03087-DAA8-4835-964A-1FD5DD76B350}.Debug|Any CPU.Build.0 = Release|Any CPU
-		{36F03087-DAA8-4835-964A-1FD5DD76B350}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{36F03087-DAA8-4835-964A-1FD5DD76B350}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{36F03087-DAA8-4835-964A-1FD5DD76B350}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36F03087-DAA8-4835-964A-1FD5DD76B350}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36F03087-DAA8-4835-964A-1FD5DD76B350}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36F03087-DAA8-4835-964A-1FD5DD76B350}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C0096F60-FB0E-4467-A4CD-779D72715DE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C0096F60-FB0E-4467-A4CD-779D72715DE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0096F60-FB0E-4467-A4CD-779D72715DE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
