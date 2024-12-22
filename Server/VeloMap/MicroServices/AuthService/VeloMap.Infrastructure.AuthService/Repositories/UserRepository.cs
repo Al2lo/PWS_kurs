@@ -18,6 +18,11 @@ namespace VeloMap.Infrastructure.AuthService.Repositories
             return user;
         }
 
+        public async Task<List<User>> GetAllUsersByAdminAsync()
+        {
+            return await _table.Where(x => x.Role != 0).ToListAsync();
+        }
+
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();

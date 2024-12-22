@@ -1,0 +1,101 @@
+/* Общий контейнер страницы */
+.events-admin {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+    color: #f5f5f5;
+  }
+  
+  /* Контейнер контента */
+  .events-admin__container {
+    width: 66%; /* 2/3 ширины страницы */
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: left; /* Устанавливаем текст по умолчанию слева */
+  }
+  
+  /* Заголовок */
+  .events-admin__header {
+    text-align: center;
+    color: #ffb733;
+    margin-bottom: 20px;
+  }
+  
+  /* Список событий */
+  .events-admin__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Элемент списка */
+  .events-admin__list-item {
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background-color: #333333;
+    color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    width: 1200px;
+    gap: 10px;
+    text-align: left; /* Текст строго слева */
+  }
+  
+  /* Заголовок элемента */
+  .events-admin__list-item-title {
+    font-size: 20px;
+    color: #ffb733;
+    margin-bottom: 10px;
+  }
+  
+  /* Описание */
+  .events-admin__list-item-description,
+  .events-admin__list-item-location,
+  .events-admin__list-item-time,
+  .events-admin__list-item-capacity,
+  .events-admin__list-item-count,
+  .events-admin__list-item-status {
+    font-size: 18px;
+    line-height: 1.5;
+    text-align: left; /* Текст строго слева */
+  }
+    
+  .events-admin__delete-button:hover {
+    background-color: #e43d3f;
+  }
+  
+  .events-admin-buttons-container
+  {
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .events-admin__accept-button {
+    background-color: #f5a30c;
+    color: #fff;
+    border: none;
+    width: 80px;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+    /* Кнопка удаления */
+  .events-admin__delete-button 
+    {
+      width: 80px;
+      background-color: #ff4d4f;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }

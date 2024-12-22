@@ -10,36 +10,6 @@ interface ModalProps {
     isOpen: boolean;
     onClose: () => void;
   }
-
-  const getMyRoutes = async (UserId: number): Promise<RouteAlias[]> => {
-    try {
-      const routes = await RouteService.getMyRoutes(UserId);
-      return routes;
-    } catch (error) {
-      toast.error('Error fetching routes:' + error);
-      return [];
-    }
-  };
-
-  const getPublicRoutes = async (): Promise<RouteAlias[]> => {
-    try {
-      const routes = await RouteService.getPublicRoutes();
-      return routes;
-    } catch (error) {
-      toast.error('Error fetching routes:'+ error);
-      return [];
-    }
-  };
-
-  const getFavoriteRoutes = async (UserId: number): Promise<RouteAlias[]> => {
-    try {
-      const routes = await RouteService.getFavoriteRoutes(UserId);
-      return routes;
-    } catch (error) {
-      toast.error('Error fetching routes:' + error);
-      return [];
-    }
-  };
   
   const GetRoute: React.FC<ModalProps> = ({isOpen, onClose}) => {
     const user = useUser(); 
@@ -47,6 +17,51 @@ interface ModalProps {
     const [publicRoutes, setPublicRoutes] = useState<RouteAlias[]>([]);
     const [favoriteRoutes, setFavoriteRoutes] = useState<RouteAlias[]>([]);
     const [selectedCategory, setSelectedCategory] = useState<'my' | 'public' | 'favorite'>('my');
+    const [isLoadingMyRoutes, setIsLoadingMyRoutes] = useState<boolean>(true);
+    const [isLoadingPublicRoutes, setIsLoadingPublicRoutes] = useState<boolean>(true);
+    const [isLoadingFavoriteRoutes, setIsLoadingFavoriteRoutes] = useState<boolean>(true);
+
+    const getMyRoutes = async (UserId: number): Promise<RouteAlias[]> => {
+      try {
+        setIsLoadingMyRoutes(true)
+        const routes = await RouteService.getMyRoutes(UserId);
+        return routes;
+      } catch (error) {
+        toast.error('Error fetching routes:' + error);
+        return [];
+      }
+      finally{
+        setIsLoadingMyRoutes(false)
+      }
+    };
+  
+    const getPublicRoutes = async (): Promise<RouteAlias[]> => {
+      try {
+        setIsLoadingPublicRoutes(true);
+        const routes = await RouteService.getPublicRoutes();
+        return routes;
+      } catch (error) {
+        toast.error('Error fetching routes:'+ error);
+        return [];
+      }
+      finally{
+        setIsLoadingPublicRoutes(false);
+      }
+    };
+  
+    const getFavoriteRoutes = async (UserId: number): Promise<RouteAlias[]> => {
+      setIsLoadingFavoriteRoutes(true)
+      try {
+        const routes = await RouteService.getFavoriteRoutes(UserId);
+        return routes;
+      } catch (error) {
+        toast.error('Error fetching routes:' + error);
+        return [];
+      }
+      finally{
+        setIsLoadingFavoriteRoutes(false)
+      }
+    };
 
     const handleCategoryClick = (category: 'my' | 'public' | 'favorite') => {
       setSelectedCategory(category);
@@ -106,10 +121,14 @@ interface ModalProps {
                 <button className={`category-button ${selectedCategory === 'favorite' ? 'active' : ''}`} onClick={() => handleCategoryClick('favorite')}>favorite routes</button>
             </div>
             <div className="routes-result-container">
+            {isLoadingMyRoutes || isLoadingPublicRoutes ||  isLoadingFavoriteRoutes ? ( 
+                <div className="loading-indicator">Loading...</div> 
+              ) : (
               <OutRoutes
                 routes={routesToDisplay}
                 closeOutRoutesWindow={onClose}
               ></OutRoutes>
+              )}
             </div>
           </div>
         </div>

@@ -133,5 +133,38 @@ namespace VeloMap.Application.RouteService.Services
 
             await _routeRepository.DeleteAsync(route);
         }
+        public async Task DeleteRouteByAdminAsync(int routeId)
+        {
+            var route = await _routeRepository.GetByIdAsync(routeId);
+
+            if (route == null)
+                throw new Exception("Route can not be null");
+
+            await _routeRepository.DeleteAsync(route);
+        }
+
+        public async Task<List<RouteDto>> GetAllRoutesAsync()
+        {
+            var routes =  await _routeRepository.GetAllAsync();
+
+            var retRoutes = routes.Select(x => new RouteDto()
+            {
+                Id = x.Id,
+                Title = x.Title,
+                Description = x.Description,
+                CreateDate = x.CreateDate,
+                Distance = x.Distance,
+                IsPublic = x.IsPublic,
+                UserId = x.UserId,
+                isLike = false,
+                Points = x.Points.Select(p => new PointDto
+                {
+                    Lat = p.Latitude,
+                    Lon = p.Longitude
+                }).ToList()
+            }).ToList();
+
+            return retRoutes;
+        }
     }
 }

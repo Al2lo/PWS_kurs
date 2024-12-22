@@ -2,13 +2,14 @@ import { FC } from "react"
 import { Link, NavLink } from "react-router-dom";
 import enterImg from '../assets/enter.png'
 import exitImg from '../assets/exit.png'
-import { useIsAuth } from "../hooks/userHooks";
+import { useIsAuth, useUser } from "../hooks/userHooks";
 import { useDispatch } from "react-redux";
 import { logout } from "../store/user/userSlice";
 import { AuthService } from "../Services/AuthService";
 import { toast } from "react-toastify";
 
 const Header : FC = () => {
+    const user = useUser();
     const isAuth = useIsAuth();
     const dispatch = useDispatch();
     const logOut = () => {
@@ -22,16 +23,23 @@ const Header : FC = () => {
 
     return (
         <header className="header">
-          <Link to="/" className="logo">
-            Logo
-          </Link>
-    
-          {isAuth && (
+          {isAuth && user != null && user.role == 1  && (
+            <Link to="/home" className="logo">
+              Logo
+            </Link>
+          )}
+          {isAuth && user != null && user.role == 0  && (
+            <Link to="/routesAdmin" className="logo">
+              Logo
+            </Link>
+          )}
+
+          {isAuth && user != null && user.role == 1  && (
             <nav className="navbar">
               <ul className="nav-list">
                 <li className="nav-item">
                   <NavLink
-                    to="/"
+                    to="/home"
                     className={({ isActive }) => (isActive ? 'nav-link active-nav-link' : 'nav-link')}
                   >
                     Home
@@ -51,6 +59,37 @@ const Header : FC = () => {
                     className={({ isActive }) => (isActive ? 'nav-link active-nav-link' : 'nav-link')}
                   >
                     Profile
+                  </NavLink>
+                </li>
+              </ul>
+            </nav>
+          )}
+
+          {isAuth && user != null && user.role == 0  && (
+            <nav className="navbar">
+              <ul className="nav-list">
+                <li className="nav-item">
+                  <NavLink
+                    to="/routesAdmin"
+                    className={({ isActive }) => (isActive ? 'nav-link active-nav-link' : 'nav-link')}
+                  >
+                    Routes
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    to="/eventsAdmin"
+                    className={({ isActive }) => (isActive ? 'nav-link active-nav-link' : 'nav-link')}
+                  >
+                    Events
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    to="/usersAdmin"
+                    className={({ isActive }) => (isActive ? 'nav-link active-nav-link' : 'nav-link')}
+                  >
+                    Users
                   </NavLink>
                 </li>
               </ul>

@@ -7,5 +7,7 @@ namespace VeloMap.Domain.EventService.Data.Repositories
     {
         Task<List<Event>> GetOpenedeEventsAsync();
         Task<List<Event>> GetByUserIdAsync(int userId);
+        Task<List<Event>> GetAllEventsAsync();
+        Task SaveChangesAsync();
     }
 }

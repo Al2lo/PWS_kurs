@@ -145,3 +145,10 @@ export interface CreateCommentDto {
     Name: string;
     Email: string;
   }
+
+  export interface AdminUsers{
+    name: string;
+    email: string;
+    id: number;
+    isBlock:boolean;
+}

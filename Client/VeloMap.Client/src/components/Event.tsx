@@ -55,7 +55,6 @@ const EventComponent: React.FC<EventBlockProps> = ({ event, updateEvents }) => {
         setOwnerName(userName)
       }
       catch(e){
-        toast.error("user not found");
         console.log(e)
       }
     }

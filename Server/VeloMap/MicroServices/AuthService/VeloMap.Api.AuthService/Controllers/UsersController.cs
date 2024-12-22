@@ -54,5 +54,36 @@ namespace VeloMap.Api.AuthService.Controllers
 
             return Ok();
         }
+
+        [Authorize(Policy = "AdminPolicy")]
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAllUsersAsync()
+        {
+            var users = await _userService.GetAllUsersAsync();
+
+            return Ok(users);
+        }
+
+        [Authorize(Policy = "AdminPolicy")]
+        [HttpPut("block")]
+        public async Task<IActionResult> BlockUserAsync([FromQuery] int userId, [FromQuery] bool block)
+        {
+            if (block)
+                await _userService.BlockUserAsync(userId);
+            else
+                await _userService.UnBlockUserAsync(userId);
+
+            return Ok();
+        }
+
+        [Authorize(Policy = "AdminPolicy")]
+        [HttpDelete]
+        public async Task<IActionResult> DeleteUserAsync([FromQuery] int userId)
+        {
+            await _userService.DeleteUserAsync(userId);
+
+            return Ok();
+        }
+
     }
 }

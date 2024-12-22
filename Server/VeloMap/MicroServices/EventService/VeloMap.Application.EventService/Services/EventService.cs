@@ -45,6 +45,31 @@ namespace VeloMap.Application.EventService.Services
             return outputEvents;
         }
 
+        public async Task<List<EventDto>> GetAllEventsAsync()
+        {
+            var events = await _eventRepository.GetAllEventsAsync();
+            var outputEvents = new List<EventDto>();
+
+            foreach (var item in events)
+            {
+                outputEvents.Add(new EventDto
+                {
+                    Id = item.Id,
+                    Title = item.Title,
+                    Description = item.Description,
+                    Location = item.Location,
+                    StartTime = item.StartTime,
+                    OwnerId = item.OwnerId,
+                    Capasity = item.Capasity,
+                    Count = item.EventUsers.Count,
+                    Participant = false,
+                    IsAccepted = item.IsAccepted,
+                });
+            }
+
+            return outputEvents;
+        }
+
         public async Task RegisterUserAsync(int userId, int eventId, CancellationToken token)
         {
             var eventUser = new EventUser()
@@ -113,6 +138,28 @@ namespace VeloMap.Application.EventService.Services
             }
 
             return outputEvents;
+        }
+
+        public async Task DeleteAsync(int eventId)
+        {
+            var deleteEvent = await _eventRepository.GetByIdAsync(eventId);
+
+            if (deleteEvent == null)
+                throw new Exception("Event not found");
+
+            await _eventRepository.DeleteAsync(deleteEvent);
+        }
+
+        public async Task UpdateEventAsync(int eventId)
+        {
+            var updateEvent = await _eventRepository.GetByIdAsync(eventId);
+
+            if (updateEvent == null)
+                throw new Exception("Event not found");
+
+            updateEvent.IsAccepted = true;
+
+            await _eventRepository.SaveChangesAsync();
         }
     }
 }

@@ -1,11 +1,11 @@
-import { RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './App.css'
-import router from './router/router'
 import './styles/HeaderStyles.css'
 import { useDispatch } from 'react-redux'
 import { AuthService } from './Services/AuthService'
 import { logout, updateIsAuth, updateUser } from './store/user/userSlice'
 import { useEffect } from 'react'
+import Router from './router/Router'
 
 function App() {
   const dispatch = useDispatch();
@@ -33,9 +33,9 @@ function App() {
     checkAuth()
   },[])
 
-  return (
-   <RouterProvider router={router}/>
-  )
+  const router = createBrowserRouter(Router());
+  
+  return <RouterProvider router={router} />;
 }
 
 export default App

@@ -15,5 +15,7 @@ namespace VeloMap.Application.RouteService.Services.Interfaces
         Task CreateFovoriteRouteAsync(CreateFavoriteRouteDto createFavoriteRouteDto, CancellationToken token);
         Task DeleteFovoriteRouteAsync(CreateFavoriteRouteDto createFavoriteRouteDto);
         Task DeleteRouteAsync(int routeId, int userId);
+        Task DeleteRouteByAdminAsync(int routeId);
+        Task<List<RouteDto>> GetAllRoutesAsync();
     }
 }

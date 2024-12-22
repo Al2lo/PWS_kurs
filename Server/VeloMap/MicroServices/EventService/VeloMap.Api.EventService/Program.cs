@@ -14,6 +14,13 @@ builder.Services
         options.JsonSerializerOptions.MaxDepth = 64;
     });
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminPolicy", policy =>
+        policy.RequireClaim("Role", "0"));
+    options.AddPolicy("UserPolicy", policy =>
+        policy.RequireClaim("Role", "1"));
+});
 
 // Add services to the container.
 

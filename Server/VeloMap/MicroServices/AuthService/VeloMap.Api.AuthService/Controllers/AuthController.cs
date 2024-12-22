@@ -57,7 +57,7 @@ namespace VeloMap.Api.AuthService.Controllers
             var validationResult = _createUserDTOValidator.Validate(createUserDTO);
 
             if (!validationResult.IsValid)
-                throw new Exception(validationResult.Errors.ToString());
+                throw new Exception(validationResult.Errors[0].ErrorMessage.ToString());
 
             await _authService.RegisterAsync(createUserDTO, cancellationToken);
 

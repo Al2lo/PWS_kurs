@@ -29,6 +29,14 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminPolicy", policy =>
+        policy.RequireClaim("Role", "0"));
+    options.AddPolicy("UserPolicy", policy =>
+        policy.RequireClaim("Role", "1"));
+});
+
 var app = builder.Build();
 
 app.UseCors();

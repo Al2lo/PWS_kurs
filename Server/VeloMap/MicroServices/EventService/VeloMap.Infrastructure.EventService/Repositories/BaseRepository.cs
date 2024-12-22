@@ -5,7 +5,7 @@ namespace VeloMap.Infrastructure.EventService.Repositories
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
-        private readonly DbContext _context;
+        protected readonly DbContext _context;
         public readonly DbSet<T> _table;
 
         public BaseRepository(DbContext context)

@@ -1,0 +1,81 @@
+/* Общий контейнер страницы */
+.routes-admin {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+    color: #f5f5f5;
+  }
+  
+  /* Контейнер контента */
+  .routes-admin__container {
+    width: 66%; /* 2/3 ширины страницы */
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: left; /* Устанавливаем текст по умолчанию слева */
+  }
+  
+  /* Заголовок */
+  .routes-admin__header {
+    text-align: center;
+    color: #ffb733;
+    margin-bottom: 20px;
+  }
+  
+  /* Список маршрутов */
+  .routes-admin__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Элемент списка */
+  .routes-admin__list-item {
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background-color: #333333;
+    color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    width: 1200px;
+    gap: 10px;
+    text-align: left; /* Текст строго слева */
+  }
+  
+  /* Заголовок элемента */
+  .routes-admin__list-item-title {
+    font-size: 20px;
+    color: #ffb733;
+    margin-bottom: 10px;
+  }
+  
+  /* Описание */
+  .routes-admin__list-item-description,
+  .routes-admin__list-item-distance,
+  .routes-admin__list-item-date,
+  .routes-admin__list-item-public,
+  .routes-admin__list-item-like {
+    font-size: 18px;
+    line-height: 1.5;
+    text-align: left; /* Текст строго слева */
+  }
+  
+  /* Кнопка удаления */
+  .routes-admin__delete-button {
+    background-color: #ff4d4f;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    align-self: flex-end; /* Кнопка слева */
+  }
+  
+  .routes-admin__delete-button:hover {
+    background-color: #e43d3f;
+  }
+  

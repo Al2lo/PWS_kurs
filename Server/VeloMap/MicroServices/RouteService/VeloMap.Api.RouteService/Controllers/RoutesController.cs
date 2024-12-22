@@ -87,11 +87,17 @@ namespace VeloMap.Api.RouteService.Controllers
         [HttpDelete()]
         public async Task<IActionResult> DeleteRouteAsync([FromQuery] int routeId)
         {
-            var userId = User?.FindFirst("userId")?.Value;
-            if (userId == null)
-                throw new Exception("User not found");
+            var userRole = User?.FindFirst("Role")?.Value;
+            if(userRole != null && int.Parse(userRole) != 0)
+            {
+                var userId = User?.FindFirst("userId")?.Value;
+                if (userId == null)
+                    throw new Exception("User not found");
 
-            await _routeService.DeleteRouteAsync(routeId, int.Parse(userId));
+                await _routeService.DeleteRouteAsync(routeId, int.Parse(userId));
+            }
+
+            await _routeService.DeleteRouteByAdminAsync(routeId);
 
             return Ok();
         }
@@ -110,6 +116,15 @@ namespace VeloMap.Api.RouteService.Controllers
             await _commentService.CreateCommentAsync(routeId, createCommentDto, token);
 
             return Ok();
+        }
+
+        [Authorize(Policy = "AdminPolicy")]
+        [HttpGet("All")]
+        public async Task<ActionResult<RouteDto>> GetAllRoutesAsync()
+        {
+            var routes = await _routeService.GetAllRoutesAsync();
+
+            return Ok(routes);
         }
     }
 }

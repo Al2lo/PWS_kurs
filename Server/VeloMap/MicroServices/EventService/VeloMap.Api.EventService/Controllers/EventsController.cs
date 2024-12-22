@@ -121,5 +121,32 @@ namespace VeloMap.Api.EventService.Controllers
 
             return Ok(events);
         }
+
+        [Authorize(Policy = "AdminPolicy")]
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAllEventsAsync()
+        {
+            var events = await _eventService.GetAllEventsAsync();
+
+            return Ok(events);
+        }
+
+        [Authorize(Policy = "AdminPolicy")]
+        [HttpDelete]
+        public async Task<IActionResult> DeleteEventAsync([FromQuery] int eventId)
+        {
+            await _eventService.DeleteAsync(eventId);
+
+            return Ok();
+        }
+
+        [Authorize(Policy = "AdminPolicy")]
+        [HttpPut]
+        public async Task<IActionResult> AcceptEvent([FromQuery] int eventId)
+        {
+            await _eventService.UpdateEventAsync(eventId);
+
+            return Ok();
+        }
     }
 }

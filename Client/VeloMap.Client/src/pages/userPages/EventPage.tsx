@@ -10,6 +10,7 @@ const EventPage: FC = () => {
     const [page, setPage] = useState<number>(0); 
     const [events, setEvents] = useState<Event[]>([]);
     const [updateEventRef, setUpdateEventRef] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const handleUpdateEvents = () => {
         setUpdateEventRef(!updateEventRef);
@@ -17,6 +18,7 @@ const EventPage: FC = () => {
 
     useEffect( () => {
         const fetchEvents = async () => {
+            setIsLoading(true)
             try{
                 var data = await EventService.GetOpenedEvents();
                 console.log(data)
@@ -24,6 +26,9 @@ const EventPage: FC = () => {
             }
             catch(e){
                 toast.error('error: ' + e)
+            }
+            finally{
+                setIsLoading(false)
             }
         }
 
@@ -34,11 +39,15 @@ const EventPage: FC = () => {
         <div className="event-container">
             <div className="filters-container">Events:</div>
 
+            {isLoading ? ( 
+          <div className="loading-indicator">Loading...</div> 
+        ) : (
             <div className="events-block">
                 {events.slice(page * 3, 3 * page + 3).map((event) => (
                     <EventComponent event={event} updateEvents={handleUpdateEvents} />
                 ))}
             </div>
+        )}
 
             <div className="buttons-scroll-container">
                 <button 

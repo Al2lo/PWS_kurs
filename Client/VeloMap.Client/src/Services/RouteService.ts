@@ -88,4 +88,9 @@ async createComments(routeId: number, comment: CreateCommentDto): Promise<any> {
   const { data } = await instance.post(`routes/${routeId}/comments`, comment);
   return data;
 },
+
+async getAllRoutes(): Promise<FullInfoRoute[]> {
+  const { data } = await instance.get('routes/all');
+  return data;
+},
 }

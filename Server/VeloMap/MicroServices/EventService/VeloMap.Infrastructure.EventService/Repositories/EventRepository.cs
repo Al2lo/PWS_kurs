@@ -17,12 +17,24 @@ namespace VeloMap.Infrastructure.EventService.Repositories
                 .ToListAsync();
         }
 
+        public async Task<List<Event>> GetAllEventsAsync()
+        {
+            return await _table
+                .Include(x => x.EventUsers)
+                .ToListAsync();
+        }
+
         public async Task<List<Event>> GetByUserIdAsync(int userId)
         {
             return await _table
                 .Where(x => x.OwnerId == userId)
                 .Include(x => x.EventUsers)
                 .ToListAsync();
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }

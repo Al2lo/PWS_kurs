@@ -47,4 +47,27 @@ async GetUserEvents(): Promise<UserEvent[]>{
 },
 
 
+async GetAllEvents(): Promise<UserEvent[]>{
+    const {data} = await instance.get('events/all');      
+    return data;
+},
+
+async DeleteEvent(eventId: number): Promise<any>{
+    const {data} = await instance.delete('events', {
+        params: {
+            eventId: eventId 
+        },
+      });    
+    return data;
+},
+
+async AcceptEvent(eventId: number): Promise<any>{
+    const { data } = await instance.put('events', null, {
+        params: {
+            eventId: eventId,
+        },
+    });
+    return data;
+},
+
 }
