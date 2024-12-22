@@ -36,6 +36,7 @@ namespace VeloMap.Api.RouteService.Controllers
             return Ok(favoriteRoutes);
         }
 
+        [Authorize]
         [HttpGet("user")]
         public async Task<ActionResult<List<Route>>> GetUserRoutesAsync([FromQuery] int userId)
         {
@@ -52,6 +53,7 @@ namespace VeloMap.Api.RouteService.Controllers
             return Ok(routes);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> CreateRouteAsync([FromBody] CreateRouteDto createRoute, CancellationToken token)
         {
@@ -59,6 +61,7 @@ namespace VeloMap.Api.RouteService.Controllers
             return Ok(new { id });
         }
 
+        [Authorize]
         [HttpPut]
         public async Task<IActionResult> UpdateRouteAsync([FromBody] UpdateRotueDto updateRoute)
         {
@@ -67,6 +70,7 @@ namespace VeloMap.Api.RouteService.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpPost("favorite")]
         public async Task<IActionResult> CreateFavoriteRouteAsync([FromBody] CreateFavoriteRouteDto createFavoriteRouteDto, CancellationToken token)
         {
@@ -75,6 +79,7 @@ namespace VeloMap.Api.RouteService.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpDelete("favorite")]
         public async Task<IActionResult> DeleteFavoriteRouteAsync([FromQuery] CreateFavoriteRouteDto createFavoriteRouteDto)
         {
@@ -96,12 +101,13 @@ namespace VeloMap.Api.RouteService.Controllers
 
                 await _routeService.DeleteRouteAsync(routeId, int.Parse(userId));
             }
-
-            await _routeService.DeleteRouteByAdminAsync(routeId);
+            else
+                await _routeService.DeleteRouteByAdminAsync(routeId);
 
             return Ok();
         }
 
+        [Authorize]
         [HttpGet("{routeId:int}/comments")]
         public async Task<IActionResult> GetCommentsAsync(int routeId)
         {
@@ -110,6 +116,7 @@ namespace VeloMap.Api.RouteService.Controllers
             return Ok(comments);
         }
 
+        [Authorize]
         [HttpPost("{routeId:int}/comments")]
         public async Task<IActionResult> CreateCommentsAsync(int routeId, [FromBody] CreateCommentDto createCommentDto, CancellationToken token)
         {

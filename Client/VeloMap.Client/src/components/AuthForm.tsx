@@ -71,7 +71,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, isLogin }) => {
       toast.success("Login was success")
       navigate('/');
     })
-    .catch ( ()=> toast.error("User not found"))
+    .catch((e)=> toast.error(JSON.parse(e.response.data).Message))
   };
 
   return (

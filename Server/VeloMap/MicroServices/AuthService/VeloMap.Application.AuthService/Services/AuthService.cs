@@ -24,13 +24,13 @@ namespace VeloMap.Application.AuthService.Services
             var user = await _userRepository.GetByEmailAsync(loginUserDTO.Email, cancellationToken);
 
             if (user == null)
-                throw new Exception("invalid Email!");
+                throw new Exception("Invalid Email!");
 
             if (!PasswordHasherHelper.Verify(loginUserDTO.Password + user.PasswordSalt, user.PasswordHash))
-                throw new Exception("invalid Password!");
+                throw new Exception("Invalid Password!");
 
             if (user.IsBlocked)
-                throw new Exception("user is blocked by admin");
+                throw new Exception("User is blocked by admin");
 
             var accessToken = _tokenService.GenerateAccessToken(user);
             var refreshToken = _tokenService.GenerateRefreshToken();
