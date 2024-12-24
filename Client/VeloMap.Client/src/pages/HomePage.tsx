@@ -197,6 +197,13 @@ const HomePage: FC = () => {
           setRouteId(route.Id);
           setUpdateButtonEnable(false);
         }
+        else{
+            setIsPublic(false);
+            setTitleRouteUpdate("");
+            setTitleDescriptionUpdate("");
+            inputRoutesLoc.current = [];
+            setUpdateButtonEnable(false);
+        }
       }, [route]);
 
       useEffect(() => {
@@ -300,12 +307,15 @@ const HomePage: FC = () => {
                             />
                             </svg>
                     </button>
+                    <div>
+                        Public
                     <button
                             className={`toggle-button ${isPublic ? 'public' : 'private'}`}
                             onClick={handleTogglePublic}
                         >
                             <span className="circle"></span>
                      </button>
+                     </div>
                     </div>
                     <button disabled={!updateButtonEnable} onClick={()=> {callUpdateRoute()}} className="save-button">Save</button>
                 </div>

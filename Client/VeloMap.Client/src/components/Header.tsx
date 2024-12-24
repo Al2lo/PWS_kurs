@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { logout } from "../store/user/userSlice";
 import { AuthService } from "../Services/AuthService";
 import { toast } from "react-toastify";
+import { updateIsLike, updateRoute } from "../store/route/routeSlice";
 
 const Header : FC = () => {
     const user = useUser();
@@ -16,6 +17,8 @@ const Header : FC = () => {
       AuthService.logout()
       .then((data)=>{
         dispatch(logout());
+        dispatch(updateRoute(null));
+        dispatch(updateIsLike(false));
         toast.success(data.message)
       })
       .catch((e)=>{toast.error('error' + e)})
@@ -25,7 +28,7 @@ const Header : FC = () => {
         <header className="header">
           {isAuth && user != null && user.role == 1  && (
             <Link to="/home" className="logo">
-              Logo
+              VeloMap
             </Link>
           )}
           {isAuth && user != null && user.role == 0  && (

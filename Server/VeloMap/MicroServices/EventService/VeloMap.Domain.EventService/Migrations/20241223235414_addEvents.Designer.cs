@@ -12,8 +12,8 @@ using VeloMap.Domain.EventService.Data;
 namespace VeloMap.Domain.EventService.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20241219182319_AddEvent")]
-    partial class AddEvent
+    [Migration("20241223235414_addEvents")]
+    partial class addEvents
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

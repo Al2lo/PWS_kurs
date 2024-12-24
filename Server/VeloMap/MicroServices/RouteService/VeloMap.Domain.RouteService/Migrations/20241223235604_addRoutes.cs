@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VeloMap.Domain.RouteService.Migrations
 {
     /// <inheritdoc />
-    public partial class AddRoutes : Migration
+    public partial class addRoutes : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

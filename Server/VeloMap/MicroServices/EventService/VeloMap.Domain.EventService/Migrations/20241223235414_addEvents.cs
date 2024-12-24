@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VeloMap.Domain.EventService.Migrations
 {
     /// <inheritdoc />
-    public partial class AddEvent : Migration
+    public partial class addEvents : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

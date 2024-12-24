@@ -6,6 +6,7 @@ namespace VeloMap.Domain.AuthService.Data.Repositories.Interfaces
     {
         Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken);
         Task<List<User>> GetAllUsersByAdminAsync();
+        Task<bool> HaveAdminAsync();
         Task SaveChangesAsync();
     }
 }

@@ -17,7 +17,7 @@ export const routeSlice = createSlice({
   name: 'route',
   initialState,
   reducers: {
-    updateRoute: (state, action: PayloadAction<Route>) => {
+    updateRoute: (state, action: PayloadAction<Route | null>) => {
         state.route = action.payload;
     },
     deleteCurrentRoute: (state) => {

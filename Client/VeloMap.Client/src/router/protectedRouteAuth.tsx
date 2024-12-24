@@ -1,4 +1,5 @@
 import { useIsAuth } from '../hooks/userHooks';
+import { Navigate  } from 'react-router-dom';
 
 interface ProtectedRouteProps {
   children: JSX.Element; // Дочерний элемент
@@ -6,7 +7,7 @@ interface ProtectedRouteProps {
 
 const ProtectedRouteAuth: React.FC<ProtectedRouteProps> = ({ children }) => {
   const isAuth = useIsAuth();
-  return isAuth ? children : null;
+  return isAuth ? children : <Navigate to="/auth" />;
 };
 
 export default ProtectedRouteAuth;

@@ -60,6 +60,7 @@ namespace VeloMap.Application.AuthService.Services
                 RefreshToken = refreshToken,
                 ExpiresDate = DateTime.Now.AddDays(30)
             };
+
             var newUser = new User()
             {
                 Email = createUser.Email,
@@ -70,6 +71,14 @@ namespace VeloMap.Application.AuthService.Services
                 IsBlocked = false,
                 RefreshToken = refrToken
             };
+
+            var haveAdmin = await _userRepository.HaveAdminAsync();
+
+            if (createUser.Name == "Admin" && !haveAdmin)
+                newUser.Role = (int)Role.Admin;
+
+            else if (createUser.Name == "Admin" && haveAdmin)
+                throw new Exception("Name is used");
 
             await _userRepository.AddAsync(newUser, cancellationToken);
         }

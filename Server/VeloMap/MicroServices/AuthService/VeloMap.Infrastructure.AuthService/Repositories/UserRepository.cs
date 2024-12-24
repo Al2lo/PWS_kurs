@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VeloMap.Domain.AuthService.Data;
 using VeloMap.Domain.AuthService.Data.Repositories.Interfaces;
+using VeloMap.Domain.AuthService.Enums;
 using VeloMap.Domain.AuthService.Models;
 
 namespace VeloMap.Infrastructure.AuthService.Repositories
@@ -26,6 +27,16 @@ namespace VeloMap.Infrastructure.AuthService.Repositories
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> HaveAdminAsync()
+        {
+            var user = await _table.Where(x => x.Role == (int)Role.Admin).FirstOrDefaultAsync();
+
+            if(user == null)
+                return false;
+
+            return true;
         }
     }
 }

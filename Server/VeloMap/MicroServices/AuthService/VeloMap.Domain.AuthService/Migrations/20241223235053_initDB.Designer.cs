@@ -12,8 +12,8 @@ using VeloMap.Domain.AuthService.Data;
 namespace VeloMap.Domain.AuthService.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20241216203613_initDb")]
-    partial class initDb
+    [Migration("20241223235053_initDB")]
+    partial class initDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
