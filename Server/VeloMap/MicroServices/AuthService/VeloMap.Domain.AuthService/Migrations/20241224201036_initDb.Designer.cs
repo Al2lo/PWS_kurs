@@ -12,15 +12,15 @@ using VeloMap.Domain.AuthService.Data;
 namespace VeloMap.Domain.AuthService.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20241223235053_initDB")]
-    partial class initDB
+    [Migration("20241224201036_initDb")]
+    partial class initDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.10")
+                .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);

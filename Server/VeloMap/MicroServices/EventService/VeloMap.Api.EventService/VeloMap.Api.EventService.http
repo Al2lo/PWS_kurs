@@ -1,4 +1,4 @@
-@VeloMap.Api.EventService_HostAddress = http://localhost:5187
+@VeloMap.Api.EventService_HostAddress = http://localhost:5079
 
 GET {{VeloMap.Api.EventService_HostAddress}}/weatherforecast/
 Accept: application/json

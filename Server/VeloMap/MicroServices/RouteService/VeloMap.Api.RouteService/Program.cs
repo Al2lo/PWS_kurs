@@ -1,14 +1,10 @@
 using VeloMap.Domain.RouteService.Extensions;
 using VeloMap.Application.RouteService.Extensions;
 using VeloMap.Infrastructure.RouteService.Extensions;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using VeloMap.Application.RouteService.Configuration;
 using VeloMap.Api.RouteService.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
-      
+
 // Add services to the container.
 
 builder.Services
@@ -52,15 +48,12 @@ var app = builder.Build();
 app.UseCors();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseMiddleware<ExceptionHandler>();
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -1,0 +1,6 @@
+@VeloMap.Geteway_HostAddress = http://localhost:5081
+
+GET {{VeloMap.Geteway_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

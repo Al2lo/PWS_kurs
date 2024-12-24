@@ -34,17 +34,17 @@ namespace VeloMap.Api.AuthService.Controllers
             var tokens = await _authService.LoginAsync(loginUserDTO, cancellationToken);
             HttpContext.Response.Cookies.Append("access-token", tokens[0], new CookieOptions
             {
-                HttpOnly = true,                
-                Secure = true,                  
-                SameSite = SameSiteMode.None,   
-                Expires = DateTime.UtcNow.AddDays(7) 
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.None,
+                Expires = DateTime.UtcNow.AddDays(7)
             });
 
             HttpContext.Response.Cookies.Append("refresh-token", tokens[1], new CookieOptions
             {
-                HttpOnly = true,                
-                Secure = true,                  
-                SameSite = SameSiteMode.None,   
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.None,
                 Expires = DateTime.UtcNow.AddDays(7)
             });
 

@@ -2,11 +2,11 @@
   "Routes": [
     {
       "DownstreamPathTemplate": "/api/Auth/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7011
+          "Host": "velomap.api.authservice",
+          "Port": 5042
         }
       ],
       "UpstreamPathTemplate": "/api/Auth/{everything}",
@@ -20,11 +20,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/Users/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7011
+          "Host": "velomap.api.authservice",
+          "Port": 5042
         }
       ],
       "UpstreamPathTemplate": "/api/Users/{everything}",
@@ -38,11 +38,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/Routes/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7236
+          "Host": "velomap.api.routeservice",
+          "Port": 5131
         }
       ],
       "UpstreamPathTemplate": "/api/Routes/{everything}",
@@ -56,11 +56,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/Events/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7222
+          "Host": "velomap.api.eventservice",
+          "Port": 5079
         }
       ],
       "UpstreamPathTemplate": "/api/Events/{everything}",
@@ -74,6 +74,6 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:7076"
+    "BaseUrl": "http://localhost:5081"
   }
 }

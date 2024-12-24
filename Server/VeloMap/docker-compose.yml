@@ -1,0 +1,57 @@
+version: '3.8'
+services:
+  velomap.api.authservice:
+    image: ${DOCKER_REGISTRY-}velomapapiauthservice
+    build:
+      context: MicroServices
+      dockerfile: AuthService/VeloMap.Api.AuthService/Dockerfile
+    depends_on:
+      - db
+    ports:
+      - "5042:5042"
+  
+  velomap.api.eventservice:
+    image: ${DOCKER_REGISTRY-}velomapapieventservice
+    build:
+      context: MicroServices
+      dockerfile: EventService/VeloMap.Api.EventService/Dockerfile
+    depends_on:
+      - db
+    ports:
+      - "5079:5079"
+
+  velomap.api.routeservice:
+    image: ${DOCKER_REGISTRY-}velomapapirouteservice
+    build:
+      context: MicroServices
+      dockerfile: RouteService/VeloMap.Api.RouteService/Dockerfile
+    depends_on:
+      - db
+    ports:
+      - "5131:5131"
+  
+  velomap.apigeteway:
+    image: ${DOCKER_REGISTRY-}velomapapigeteway
+    build:
+      context: MicroServices
+      dockerfile: Geteway/VeloMap.Geteway/Dockerfile
+    depends_on:
+      - velomap.api.authservice
+      - velomap.api.eventservice
+      - velomap.api.routeservice
+    ports:
+      - "5081:5081"
+
+  db:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    container_name: mssql-server
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Admin123"
+    ports:
+      - "1434:1433"
+    volumes:
+      - db_data:/var/opt/mssql 
+
+volumes:
+  db_data:

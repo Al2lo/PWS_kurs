@@ -93,7 +93,7 @@ namespace VeloMap.Api.RouteService.Controllers
         public async Task<IActionResult> DeleteRouteAsync([FromQuery] int routeId)
         {
             var userRole = User?.FindFirst("Role")?.Value;
-            if(userRole != null && int.Parse(userRole) != 0)
+            if (userRole != null && int.Parse(userRole) != 0)
             {
                 var userId = User?.FindFirst("userId")?.Value;
                 if (userId == null)

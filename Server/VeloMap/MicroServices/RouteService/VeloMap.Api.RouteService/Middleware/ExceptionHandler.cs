@@ -2,7 +2,7 @@
 using System.Text.Json;
 
 namespace VeloMap.Api.RouteService.Middleware
-{      
+{
     public class ExceptionHandler
     {
         private readonly RequestDelegate _next;
