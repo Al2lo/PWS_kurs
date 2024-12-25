@@ -15,7 +15,6 @@ const RoutesAdminPage: FC = () => {
             try{
                 var data = await RouteService.getAllRoutes();
                 setRoutes(data);
-                toast.success("Loading done")
             }
             catch(e)
             {

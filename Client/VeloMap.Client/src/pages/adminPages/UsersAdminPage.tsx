@@ -14,7 +14,6 @@ const UsersAdminPage: FC = () => {
     try {
       const data = await UserService.GetAllUsers();
       setUsers(data);
-      toast.success("Users loaded successfully");
     } catch (error) {
       toast.error("Error loading users");
     }

@@ -15,7 +15,6 @@ const EventsAdminPage: FC = () => {
     try {
       const data = await EventService.GetAllEvents();
       setEvents(data);
-      toast.success("Events loaded successfully");
     } catch (error) {
       toast.error("Error loading events");
     } finally {

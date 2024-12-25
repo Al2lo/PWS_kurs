@@ -109,7 +109,7 @@ const HomePage: FC = () => {
         UserId: user.id,
         Points: inputRoutesLoc.current,
       }));
-
+      dispatch(updateIsLike(false));
       toast.success("Route was created")
     })
     .catch((error) => {

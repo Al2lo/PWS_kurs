@@ -24,18 +24,15 @@ namespace VeloMap.Domain.RouteService.Configuration
                 .IsRequired()
                 .HasColumnType("varchar");
 
-
             builder.Property(x => x.Distance)
                 .HasMaxLength(20)
                 .IsRequired()
                 .HasColumnType("varchar");
 
-
             builder.Property(x => x.CreateDate)
                 .HasColumnType("datetime")
                 .HasDefaultValueSql("GETDATE()")
                 .IsRequired();
-
 
             builder.Property(r => r.IsPublic)
                 .IsRequired();

@@ -29,7 +29,6 @@ interface ModalProps {
 const getRouteAsync = async (id: number, userId: number): Promise<FullInfoRoute | null> => {
   try {
         const routes = await RouteService.getRoute(id, userId);
-        toast.success("Route was downloaded")
         return routes;
     } catch (error) {
         toast.error('Error fetching routes:'+ error);

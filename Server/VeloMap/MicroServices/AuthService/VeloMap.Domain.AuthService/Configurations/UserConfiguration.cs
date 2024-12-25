@@ -20,19 +20,15 @@ namespace VeloMap.Domain.AuthService.Configurations
                 .HasColumnType("varchar");
 
             builder.Property(x => x.Email)
-                .HasColumnType("datetime")
+                .HasColumnType("varchar")
                 .IsRequired();
 
             builder.Property(x => x.PasswordHash)
-                .HasColumnType("datetime")
+                .HasColumnType("varchar")
                 .IsRequired();
 
-            builder.Property(x => x.PasswordHash)
-                .HasColumnType("datetime")
-                .IsRequired();
-
-            builder.Property(x => x.PasswordHash)
-                .HasColumnType("datetime")
+            builder.Property(x => x.PasswordSalt)
+                .HasColumnType("varchar")
                 .IsRequired();
 
             builder.Property(x => x.Role)
